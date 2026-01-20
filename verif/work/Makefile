@@ -1,4 +1,4 @@
-src=uart_top
+src=sram
 testname=test
 verbosity=UVM_MEDIUM
 .DEFAULT_GOAL := help
