@@ -1,18 +1,16 @@
-module tb_sram_mixed;
+module tb_sram_mixed_xcelium;
 
     localparam int DATA_WIDTH = 8;
     localparam int ADDR_WIDTH = 4;
     localparam real VDD = 1.8;
 
-    // Señales mixed-signal
     wreal clk;
     wreal we;
     wreal [ADDR_WIDTH-1:0] addr;
     wreal [DATA_WIDTH-1:0] din;
     wreal [DATA_WIDTH-1:0] dout;
 
-    // DUT
-    sram_mixed_readfirst #(
+    sram_mixed_xcelium #(
         .DATA_WIDTH(DATA_WIDTH),
         .ADDR_WIDTH(ADDR_WIDTH)
     ) dut (
@@ -32,30 +30,26 @@ module tb_sram_mixed;
     end
 
     // -----------------------------
-    // Task: escribir
+    // Write task
     // -----------------------------
     task write_mem(input int a, input byte d);
-        begin
-            we = VDD;
-            for (int i = 0; i < ADDR_WIDTH; i++)
-                addr[i] = a[i] ? VDD : 0.0;
-            for (int i = 0; i < DATA_WIDTH; i++)
-                din[i] = d[i] ? VDD : 0.0;
-            @(posedge clk);
-            we = 0.0;
-        end
+        we = VDD;
+        for (int i = 0; i < ADDR_WIDTH; i++)
+            addr[i] = a[i] ? VDD : 0.0;
+        for (int i = 0; i < DATA_WIDTH; i++)
+            din[i] = d[i] ? VDD : 0.0;
+        @(posedge clk);
+        we = 0.0;
     endtask
 
     // -----------------------------
-    // Task: leer
+    // Read task
     // -----------------------------
     task read_mem(input int a);
-        begin
-            we = 0.0;
-            for (int i = 0; i < ADDR_WIDTH; i++)
-                addr[i] = a[i] ? VDD : 0.0;
-            @(posedge clk);
-        end
+        we = 0.0;
+        for (int i = 0; i < ADDR_WIDTH; i++)
+            addr[i] = a[i] ? VDD : 0.0;
+        @(posedge clk);
     endtask
 
     // -----------------------------
@@ -66,23 +60,22 @@ module tb_sram_mixed;
         addr = '{default:0.0};
         din  = '{default:0.0};
 
-        #20;
+        #30;
 
-        $display("=== ESCRITURA addr=3, data=0xAA ===");
+        $display("WRITE addr=3 data=0xAA");
         write_mem(3, 8'hAA);
 
-        #20;
+        #30;
 
-        $display("=== LECTURA addr=3 ===");
+        $display("READ addr=3");
         read_mem(3);
 
-        #20;
+        #30;
 
-        $display("=== READ-FIRST TEST ===");
-        $display("Escribiendo 0x55 en addr=3, salida debe ser 0xAA");
+        $display("READ-FIRST test (expect old data)");
         write_mem(3, 8'h55);
 
-        #50;
+        #80;
         $finish;
     end
 
