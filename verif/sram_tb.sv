@@ -4,11 +4,11 @@ module tb_sram_mixed_xcelium;
     localparam int ADDR_WIDTH = 4;
     localparam real VDD = 1.8;
 
-    wreal clk;
-    wreal we;
-    wreal [ADDR_WIDTH-1:0] addr;
-    wreal [DATA_WIDTH-1:0] din;
-    wreal [DATA_WIDTH-1:0] dout;
+    logic clk;
+    logic we;
+    logic [ADDR_WIDTH-1:0] addr;
+    logic [DATA_WIDTH-1:0] din;
+    logic [DATA_WIDTH-1:0] dout;
 
     sram_mixed_xcelium #(
         .DATA_WIDTH(DATA_WIDTH),

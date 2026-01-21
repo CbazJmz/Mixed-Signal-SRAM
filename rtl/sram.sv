@@ -6,11 +6,11 @@ module sram_mixed_xcelium #(
     parameter time T_RD       = 5ns,
     parameter time T_WR       = 5ns
 )(
-    input  wreal                    clk,
-    input  wreal                    we,
-    input  wreal [ADDR_WIDTH-1:0]   addr,
-    input  wreal [DATA_WIDTH-1:0]   din,
-    output wreal [DATA_WIDTH-1:0]   dout
+    input  logic                    clk,
+    input  logic                    we,
+    input  logic [ADDR_WIDTH-1:0]   addr,
+    input  logic [DATA_WIDTH-1:0]   din,
+    output logic [DATA_WIDTH-1:0]   dout
 );
 
     // -----------------------------
