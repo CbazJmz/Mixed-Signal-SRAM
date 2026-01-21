@@ -14,4 +14,9 @@ list:
 	
 sim: 
 	xrun ${compile_switches}	
+simvision:
+	simvision shm_db
 
+
+clean:
+	rm -rf xrun* waves* xcelium* logs shm_db .sim* .svm* *.diag uvm_test_name.svh

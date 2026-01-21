@@ -24,10 +24,7 @@ module tb_sram_mixed_xcelium;
     // -----------------------------
     // Clock analógico
     // -----------------------------
-    initial begin
-        clk = 0.0;
-        forever #10 clk = (clk == 0.0) ? VDD : 0.0;
-    end
+    always #5 clk = ~clk;
 
     // -----------------------------
     // Write task
@@ -78,5 +75,16 @@ module tb_sram_mixed_xcelium;
         #80;
         $finish;
     end
+
+	initial begin
+		$shm_open("shm_db");
+		$shm_probe("ASMTR");
+	end
+
+	// Timeout
+	initial begin
+	#1ms;
+	$finish;
+	end
 
 endmodule

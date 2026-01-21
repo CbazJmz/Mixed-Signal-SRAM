@@ -1,2 +1,2 @@
-#e1(21Jan2026:23:15:52): source ./xcelium.d/env.d/env.history.21Jan2026_23_15_52
-s1(21Jan2026:23:15:52):  xrun -f list.f -l /comp.log -access +rwc -timescale 1ns/1ps -sv 
+#e1(21Jan2026:23:50:52): source ./xcelium.d/env.d/env.history.21Jan2026_23_50_52
+s1(21Jan2026:23:50:52):  xrun -f list.f -l /comp.log -access +rwc -timescale 1ns/1ps -sv 
