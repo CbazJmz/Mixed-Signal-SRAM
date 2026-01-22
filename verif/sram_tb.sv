@@ -1,17 +1,34 @@
 module sram_tb;
 
+    //-------------------------------------------------
+    // Parámetros
+    //-------------------------------------------------
     localparam int DATA_WIDTH = 8;
     localparam int ADDR_WIDTH = 4;
     localparam int ANA_WIDTH  = 8;
+
     localparam int FULL_SCALE = 255;
 
+    localparam int DEPTH = 1 << ADDR_WIDTH;
+
+    //-------------------------------------------------
+    // Señales "analógicas" emuladas
+    //-------------------------------------------------
     logic [ANA_WIDTH-1:0] clk_a;
     logic [ANA_WIDTH-1:0] we_a;
+
     logic [ANA_WIDTH-1:0] addr_a [ADDR_WIDTH];
     logic [ANA_WIDTH-1:0] din_a  [DATA_WIDTH];
     logic [ANA_WIDTH-1:0] dout_a [DATA_WIDTH];
 
-    sram dut (
+    //-------------------------------------------------
+    // DUT
+    //-------------------------------------------------
+    sram #(
+        .DATA_WIDTH(DATA_WIDTH),
+        .ADDR_WIDTH(ADDR_WIDTH),
+        .ANA_WIDTH (ANA_WIDTH)
+    ) dut (
         .clk_a (clk_a),
         .we_a  (we_a),
         .addr_a(addr_a),
@@ -19,9 +36,9 @@ module sram_tb;
         .dout_a(dout_a)
     );
 
-    // -----------------------------
-    // Clock "analógico" digital
-    // -----------------------------
+    //-------------------------------------------------
+    // Clock
+    //-------------------------------------------------
     initial begin
         clk_a = 0;
         forever #10 clk_a = (clk_a == 0) ? FULL_SCALE : 0;
@@ -128,3 +145,4 @@ module sram_tb;
     end
 
 endmodule
+
