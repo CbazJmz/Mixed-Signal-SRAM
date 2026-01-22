@@ -27,29 +27,54 @@ module sram_tb;
         forever #10 clk_a = (clk_a == 0) ? FULL_SCALE : 0;
     end
 
-    // -----------------------------
-    // Tasks
-    // -----------------------------
-    task write_mem(input int a, input byte d);
-        we_a = FULL_SCALE;
+    //-------------------------------------------------
+    // Helpers
+    //-------------------------------------------------
+    function byte dout_to_byte();
+        byte tmp;
+        for (int i = 0; i < DATA_WIDTH; i++)
+            tmp[i] = (dout_a[i] > (FULL_SCALE/2));
+        return tmp;
+    endfunction
+
+    task set_addr(input int a);
         for (int i = 0; i < ADDR_WIDTH; i++)
             addr_a[i] = a[i] ? FULL_SCALE : 0;
+    endtask
+
+    task set_data(input byte d);
         for (int i = 0; i < DATA_WIDTH; i++)
             din_a[i] = d[i] ? FULL_SCALE : 0;
+    endtask
+
+    //-------------------------------------------------
+    // Write
+    //-------------------------------------------------
+    task write_mem(input int a, input byte d);
+        set_addr(a);
+        set_data(d);
+        we_a = FULL_SCALE;
         @(posedge clk_a);
         we_a = 0;
     endtask
 
-    task read_mem(input int a);
+    //-------------------------------------------------
+    // Read
+    //-------------------------------------------------
+    task read_mem(input int a, output byte d);
+        set_addr(a);
         we_a = 0;
-        for (int i = 0; i < ADDR_WIDTH; i++)
-            addr_a[i] = a[i] ? FULL_SCALE : 0;
         @(posedge clk_a);
+        #1; // esperar retardo
+        d = dout_to_byte();
     endtask
 
-    // -----------------------------
-    // Stimulus
-    // -----------------------------
+    //-------------------------------------------------
+    // Test principal
+    //-------------------------------------------------
+    int errors = 0;
+    byte rdata;
+
     initial begin
         we_a = 0;
         foreach (addr_a[i]) addr_a[i] = 0;
@@ -57,32 +82,49 @@ module sram_tb;
 
         #20;
 
-        $display("WRITE addr=2 data=0xA5");
-        write_mem(2, 8'hA5);
+        $display("\n==============================");
+        $display(" ESCRITURA SECUENCIAL");
+        $display("==============================");
 
-        #20;
+        // -------------------------
+        // WRITE: 0,1,2,3,...,DEPTH-1
+        // -------------------------
+        for (int i = 0; i < DEPTH; i++) begin
+            write_mem(i, i);
+        end
 
-        $display("READ addr=2");
-        read_mem(2);
+        #40;
 
-        #20;
+        $display("\n==============================");
+        $display(" LECTURA + VERIFICACION");
+        $display("==============================");
 
-        $display("READ-FIRST test (write 0x3C, expect 0xA5)");
-        write_mem(2, 8'h3C);
+        // -------------------------
+        // READ + CHECK
+        // -------------------------
+        for (int i = 0; i < DEPTH; i++) begin
+            read_mem(i, rdata);
 
-        #80;
+            if (rdata !== i[7:0]) begin
+                $display("ERROR addr=%0d expected=%0d got=%0d",
+                          i, i, rdata);
+                errors++;
+            end
+            else begin
+                $display("OK addr=%0d data=%0d", i, rdata);
+            end
+        end
+
+        //-------------------------------------------------
+        // Resultado
+        //-------------------------------------------------
+        if (errors == 0)
+            $display("\n TEST PASS");
+        else
+            $display("\n TEST FAIL — errores=%0d", errors);
+
+        #40;
         $finish;
     end
-    
-	initial begin
-		$shm_open("shm_db");
-		$shm_probe("ASMTR");
-	end
-
-	// Timeout
-	initial begin
-	#1ms;
-	$finish;
-	end
 
 endmodule
