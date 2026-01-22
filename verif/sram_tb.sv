@@ -1,4 +1,4 @@
-module tb_sram_digital_emulated;
+module sram_tb;
 
     localparam int DATA_WIDTH = 8;
     localparam int ADDR_WIDTH = 4;
@@ -11,7 +11,7 @@ module tb_sram_digital_emulated;
     logic [ANA_WIDTH-1:0] din_a  [DATA_WIDTH];
     logic [ANA_WIDTH-1:0] dout_a [DATA_WIDTH];
 
-    sram_digital_emulated dut (
+    sram dut (
         .clk_a (clk_a),
         .we_a  (we_a),
         .addr_a(addr_a),
@@ -73,5 +73,16 @@ module tb_sram_digital_emulated;
         #80;
         $finish;
     end
+    
+	initial begin
+		$shm_open("shm_db");
+		$shm_probe("ASMTR");
+	end
+
+	// Timeout
+	initial begin
+	#1ms;
+	$finish;
+	end
 
 endmodule

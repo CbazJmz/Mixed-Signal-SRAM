@@ -1,2 +1,12 @@
 DMSPFEB, option -no_analogsolver
 SVMSEB, option -sv
+DMSPFEB, option -no_analogsolver
+SVMSEB, option -sv
+DMSPFEB, option -no_analogsolver
+SVMSEB, option -sv
+DMSPFEB, option -no_analogsolver
+SVMSEB, option -sv
+DMSPFEB, option -no_analogsolver
+SVMSEB, option -sv
+DMSPFEB, option -no_analogsolver
+SVMSEB, option -sv

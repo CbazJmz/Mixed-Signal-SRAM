@@ -1,4 +1,4 @@
-module sram_digital_emulated #(
+module sram #(
     parameter int DATA_WIDTH   = 8,
     parameter int ADDR_WIDTH   = 4,
     parameter int ANA_WIDTH    = 8,      // resolución "analógica"
@@ -43,7 +43,7 @@ module sram_digital_emulated #(
         read_data <= mem[address]; // leer primero
 
         if (we_d) begin
-            #(T_WR);
+    //        #(T_WR);
             for (int i = 0; i < DATA_WIDTH; i++)
                 mem[address][i] <= (din_a[i] > THRESHOLD);
         end
@@ -53,8 +53,8 @@ module sram_digital_emulated #(
     // Retardo lectura
     // -----------------------------
     always @(read_data)
-        dout_reg <= #(T_RD) read_data;
-
+    //    dout_reg <= #(T_RD) read_data;
+	dout_reg <= read_data;
     // -----------------------------
     // "DAC" digital
     // -----------------------------
