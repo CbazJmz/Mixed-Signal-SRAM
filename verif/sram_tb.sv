@@ -1,90 +1,77 @@
-module tb_sram_mixed_xcelium;
+module tb_sram_digital_emulated;
 
     localparam int DATA_WIDTH = 8;
     localparam int ADDR_WIDTH = 4;
-    localparam real VDD = 1.8;
+    localparam int ANA_WIDTH  = 8;
+    localparam int FULL_SCALE = 255;
 
-    logic clk;
-    logic we;
-    logic [ADDR_WIDTH-1:0] addr;
-    logic [DATA_WIDTH-1:0] din;
-    logic [DATA_WIDTH-1:0] dout;
+    logic [ANA_WIDTH-1:0] clk_a;
+    logic [ANA_WIDTH-1:0] we_a;
+    logic [ANA_WIDTH-1:0] addr_a [ADDR_WIDTH];
+    logic [ANA_WIDTH-1:0] din_a  [DATA_WIDTH];
+    logic [ANA_WIDTH-1:0] dout_a [DATA_WIDTH];
 
-    sram_mixed_xcelium #(
-        .DATA_WIDTH(DATA_WIDTH),
-        .ADDR_WIDTH(ADDR_WIDTH)
-    ) dut (
-        .clk(clk),
-        .we(we),
-        .addr(addr),
-        .din(din),
-        .dout(dout)
+    sram_digital_emulated dut (
+        .clk_a (clk_a),
+        .we_a  (we_a),
+        .addr_a(addr_a),
+        .din_a (din_a),
+        .dout_a(dout_a)
     );
 
     // -----------------------------
-    // Clock analógico
+    // Clock "analógico" digital
     // -----------------------------
-    always #5 clk = ~clk;
+    initial begin
+        clk_a = 0;
+        forever #10 clk_a = (clk_a == 0) ? FULL_SCALE : 0;
+    end
 
     // -----------------------------
-    // Write task
+    // Tasks
     // -----------------------------
     task write_mem(input int a, input byte d);
-        we = VDD;
+        we_a = FULL_SCALE;
         for (int i = 0; i < ADDR_WIDTH; i++)
-            addr[i] = a[i] ? VDD : 0.0;
+            addr_a[i] = a[i] ? FULL_SCALE : 0;
         for (int i = 0; i < DATA_WIDTH; i++)
-            din[i] = d[i] ? VDD : 0.0;
-        @(posedge clk);
-        we = 0.0;
+            din_a[i] = d[i] ? FULL_SCALE : 0;
+        @(posedge clk_a);
+        we_a = 0;
     endtask
 
-    // -----------------------------
-    // Read task
-    // -----------------------------
     task read_mem(input int a);
-        we = 0.0;
+        we_a = 0;
         for (int i = 0; i < ADDR_WIDTH; i++)
-            addr[i] = a[i] ? VDD : 0.0;
-        @(posedge clk);
+            addr_a[i] = a[i] ? FULL_SCALE : 0;
+        @(posedge clk_a);
     endtask
 
     // -----------------------------
     // Stimulus
     // -----------------------------
     initial begin
-        we = 0.0;
-        addr = '{default:0.0};
-        din  = '{default:0.0};
+        we_a = 0;
+        foreach (addr_a[i]) addr_a[i] = 0;
+        foreach (din_a[i])  din_a[i]  = 0;
 
-        #30;
+        #20;
 
-        $display("WRITE addr=3 data=0xAA");
-        write_mem(3, 8'hAA);
+        $display("WRITE addr=2 data=0xA5");
+        write_mem(2, 8'hA5);
 
-        #30;
+        #20;
 
-        $display("READ addr=3");
-        read_mem(3);
+        $display("READ addr=2");
+        read_mem(2);
 
-        #30;
+        #20;
 
-        $display("READ-FIRST test (expect old data)");
-        write_mem(3, 8'h55);
+        $display("READ-FIRST test (write 0x3C, expect 0xA5)");
+        write_mem(2, 8'h3C);
 
         #80;
         $finish;
     end
-
-	initial begin
-		$shm_open("shm_db");
-		$shm_probe("ASMTR");
-	end
-
-	// Timeout
-	initial begin
-	#1ms;
-	$finish;
-	end
 
 endmodule
