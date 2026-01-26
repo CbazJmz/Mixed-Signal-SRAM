@@ -1,70 +1,64 @@
 module sram #(
-    parameter int DATA_WIDTH   = 8,
-    parameter int ADDR_WIDTH   = 4,
-    parameter int ANA_WIDTH    = 8,      // resolución "analógica"
-    parameter int FULL_SCALE   = 255,    // emula VDD
-    parameter int THRESHOLD    = 128,    // emula VTH
-    parameter time T_RD        = 5ns,
-    parameter time T_WR        = 5ns
+    parameter ROWS=16,
+    parameter COLS=8
 )(
-    input  logic [ANA_WIDTH-1:0]               clk_a,
-    input  logic [ANA_WIDTH-1:0]               we_a,
-    input  logic [ANA_WIDTH-1:0]               addr_a [ADDR_WIDTH],
-    input  logic [ANA_WIDTH-1:0]               din_a  [DATA_WIDTH],
-    output logic [ANA_WIDTH-1:0]               dout_a [DATA_WIDTH]
+    input   logic [COLS-1:0] data_in,
+    input   logic [$clog2(ROWS)-1:0] row_sel,
+    input   logic rd_wr,
+    output  logic [COLS-1:0] data_out
 );
 
-    // -----------------------------
-    // Memoria digital real
-    // -----------------------------
-    logic [DATA_WIDTH-1:0] mem [0:(1<<ADDR_WIDTH)-1];
-    logic [DATA_WIDTH-1:0] read_data, dout_reg;
+    logic   [ROWS-1:0] row;
+    logic   [COLS-1:0] bl_wr;
+    logic   [COLS-1:0] blb_wr;
+    logic   [COLS-1:0] bl_rd;
+    logic   [COLS-1:0] blb_rd;
+    
+    logic   [COLS-1:0] bl_col;
+    logic   [COLS-1:0] blb_col;
+    
+    logic   [COLS-1:0] preout;
+    
+    
+    decoder #(ROWS) dec (
+        .row_sel  (row_sel),
+        .row (row)
+    );
 
-    logic clk_d, we_d;
-    int address;
+    precharge #(COLS) pre(
+        .rd_wr  (rd_wr),
+        .bl_rd (bl_rd),
+        .blb_rd  (blb_rd)
+    );
 
-    // -----------------------------
-    // "ADC" digital
-    // -----------------------------
-    always_comb begin
-        clk_d = (clk_a > THRESHOLD);
-        we_d  = (we_a  > THRESHOLD);
+    write_driver #(COLS) wd(
+        .data_in  (data_in),
+        .bl_wr  (bl_wr),
+        .blb_wr  (blb_wr)
+    );
 
-        address = 0;
-        for (int i = 0; i < ADDR_WIDTH; i++)
-            if (addr_a[i] > THRESHOLD)
-                address |= (1 << i);
-    end
+    pair_mux #(COLS) pm(
+        .bl_wr  (bl_wr),
+        .blb_wr  (blb_wr),
+        .bl_rd  (bl_rd),
+        .blb_rd  (blb_rd),
+        .bl_col  (bl_col),
+        .blb_col  (blb_col),
+        .rd_wr  (rd_wr)
+    );
 
-    // -----------------------------
-    // SRAM READ-FIRST
-    // -----------------------------
-    always_ff @(posedge clk_d) begin
-        read_data <= mem[address]; // leer primero
+    cell_array #(ROWS,COLS) ca(
+        .bl_col  (bl_col),
+        .blb_col  (blb_col),
+        .row    (row)
+        );
 
-        if (we_d) begin
-    //        #(T_WR);
-            for (int i = 0; i < DATA_WIDTH; i++)
-                mem[address][i] <= (din_a[i] > THRESHOLD);
-        end
-    end
+    sense_amp #(COLS) sa(
+        .bl_col  (bl_col),
+        .blb_col  (blb_col),
+        .preout  (preout)
+        );
 
-    // -----------------------------
-    // Retardo lectura
-    // -----------------------------
-    always @(read_data)
-    //    dout_reg <= #(T_RD) read_data;
-	dout_reg <= read_data;
-    // -----------------------------
-    // "DAC" digital
-    // -----------------------------
-    genvar k;
-    generate
-        for (k = 0; k < DATA_WIDTH; k++) begin
-            always_comb begin
-                dout_a[k] = dout_reg[k] ? FULL_SCALE : 0;
-            end
-        end
-    endgenerate
+    assign data_out = rd_wr ? preout : '0;
 
 endmodule
