@@ -1,8 +1,8 @@
 module sense_amp#(
     parameter COLS=16)(
-    input  logic [COLS-1:0] bl_col,      //BL line from memory array
-    input  logic [COLS-1:0] blb_col,     //BLB line from memory array
-    output logic [COLS-1:0] preout       //Output from diff amplifiers
+    input  wire [COLS-1:0] bl_col,      //BL line from memory array
+    input  wire [COLS-1:0] blb_col,     //BLB line from memory array
+    output wire [COLS-1:0] preout       //Output from diff amplifiers
 );
 
     genvar i;

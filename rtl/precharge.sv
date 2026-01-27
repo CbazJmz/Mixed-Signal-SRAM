@@ -1,8 +1,8 @@
 module precharge #(
     parameter COLS=8)(
-    input logic rd_wr,
-    output logic [COLS-1:0] bl_rd,
-    output logic [COLS-1:0] blb_rd
+    input wire rd_wr,
+    inout wire [COLS-1:0] bl_rd,
+    inout wire [COLS-1:0] blb_rd
 );
     // Set bl and blb lines to read operation
     genvar i;

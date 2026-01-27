@@ -1,5 +1,5 @@
 module sram_cell (
-    input  logic row,
+    input  wire row,
     inout  wire bl_col,
     inout  wire blb_col
 );
