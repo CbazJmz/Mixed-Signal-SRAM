@@ -1,6 +1,6 @@
 # ============================ rtl
-	../../rtl/sram.sv
+	../../rtl/sram_cell.sv
 
 
 # ============================ verification
-	../sram_tb.sv
+#	../sram_tb.sv

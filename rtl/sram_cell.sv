@@ -1,11 +1,11 @@
 module sram_cell (
     input  logic row,
-    inout  logic bl_col,
-    inout  logic blb_col
+    inout  real bl_col,
+    inout  real blb_col
 );
     // NMOS and NOT Gates nodes
-    logic inv1;
-    logic inv2;
+    real inv1;
+    real inv2;
     // Memory cell structure
     nmos nmos1(inv1,bl_col,row);
     nmos nmos2(blb_col,inv2,row);
