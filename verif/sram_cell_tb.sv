@@ -14,28 +14,28 @@ module sram_cell_tb#(
 	wire blb_rd;
 	
     sram_cell cell1(
-    .row (row[r]),
-    .bl_col (bl_col[c]),
-    .blb_col(blb_col[c])
+    .row (row),
+    .bl_col (bl_col),
+    .blb_col(blb_col)
     );
 	
-	write_driver #(COLS=COLS) writed1 (
+	write_driver #(.COLS (COLS)) writed1 (
 	.data_in (data_in),
 	.bl_wr (bl_wr),
 	.blb_wr (blb_wr)
-	)
+	);
 	
-	precharge #(COLS=COLS) pre1 (
+	precharge #(.COLS (COLS)) pre1 (
 	.rd_wr (rd_wr),
 	.bl_rd (bl_rd),
 	.blb_rd (blb_rd)
-	)
+	);
 	
-	sense_amp #(COLS=COLS) amp1 (
+	sense_amp #(.COLS (COLS)) amp1 (
 	.bl_col (bl_col),
 	.blb_col (blb_col),
 	.preout (preout)
-	)
+	);
 	
 	// Multiplexer for read or write operation
 	assign blb_col = rd_wr ? blb_rd : blb_wr;
@@ -90,6 +90,11 @@ module sram_cell_tb#(
 		#10ns;
 
         $finish;
+    end
+
+    initial begin
+	    $shm_open("shm_db");
+	    $shm_probe("ASMTR");
     end
 
 endmodule
