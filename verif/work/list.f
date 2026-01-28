@@ -1,7 +1,7 @@
 # ============================ rtl
 	../../rtl/sram_cell.sv
 	../../rtl/write_driver.sv
-	../../rtl/precharge.sv
+#	../../rtl/precharge.sv
 	../../rtl/sense_amp.sv
 
 
