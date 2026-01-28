@@ -25,13 +25,13 @@ module sram_cell_tb#(
     .oblb_col(oblb_col)
     );
 	
-	write_driver #(.COLS (COLS)) writed1 (
+	write_driver writed1 (
 	.data_in (data_in),
 	.bl_wr (bl_wr),
 	.blb_wr (blb_wr)
 	);
 	
-	sense_amp #(.COLS (COLS)) amp1 (
+	sense_amp amp1 (
 	.bl_col (obl_col),
 	.blb_col (oblb_col),
 	.preout (preout)
