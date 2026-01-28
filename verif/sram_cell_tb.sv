@@ -2,8 +2,6 @@ module sram_cell_tb#(
     parameter COLS=1)();
 	
 	logic data_in;
-	logic rd;
-	logic wr;
 	logic row_wr;
 	logic row_rd;
 	logic preout;
@@ -19,6 +17,7 @@ module sram_cell_tb#(
 	
     sram_cell cell1(
     .row_wr (row_wr),
+	.row_rd (row_rd),
     .bl_col (bl_col),
     .blb_col(blb_col),
 	.obl_col (obl_col),
@@ -32,29 +31,24 @@ module sram_cell_tb#(
 	);
 	
 	sense_amp amp1 (
-	.bl_col (obl_col),
-	.blb_col (oblb_col),
+	.obl_col (obl_col),
+	.oblb_col (oblb_col),
 	.preout (preout)
 	);
-	
-	// Multiplexer for read or write operation
-	assign blb_col = wr ? blb_rd : blb_wr;
-	assign bl_col = wr ? bl_rd : bl_wr;
 
     // Initial procedural block that is executed at t=0
     // This starts a concurrent process
     initial begin
 	
 		data_in = 1'b0;
-		wr = 1'b0;
 		row_wr = 1'b0;
+		row_rd = 1'b0;
 		
 		#10ns;
 		
 		//Write 1 operation
 		
 		data_in = 1'b1;
-		wr = 1'b0;
 		#10ns;
 		row_wr = 1'b1;
 		#10ns;
@@ -63,17 +57,15 @@ module sram_cell_tb#(
 		
 		//Read operation
 		
-		wr = 1'b1;
 		#10ns;
-		row_wr = 1'b1;
+		row_rd = 1'b1;
 		#10ns;
-		row_wr = 1'b0;
+		row_rd = 1'b0;
 		#10ns;
 		
 		//Write 0 operation
 		
 		data_in = 1'b0;
-		wr = 1'b0;
 		#10ns;
 		row_wr = 1'b1;
 		#10ns;
@@ -82,11 +74,10 @@ module sram_cell_tb#(
 		
 		//Read operation
 		
-		wr = 1'b1;
 		#10ns;
-		row_wr = 1'b1;
+		row_rd = 1'b1;
 		#10ns;
-		row_wr = 1'b0;
+		row_rd = 1'b0;
 		#10ns;
 
         $finish;
