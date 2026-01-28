@@ -6,12 +6,12 @@ module sram_cell_tb#(
 	logic row;
 	logic preout;
 
-	wire bl_col;
-	wire blb_col;
-	wire bl_wr;
-	wire blb_wr;
-	wire bl_rd;
-	wire blb_rd;
+	real bl_col;
+	real blb_col;
+	real bl_wr;
+	real blb_wr;
+	real bl_rd;
+	real blb_rd;
 	
     sram_cell cell1(
     .row (row),
@@ -45,48 +45,48 @@ module sram_cell_tb#(
     // This starts a concurrent process
     initial begin
 	
-		data_in <= 1'b0;
-		rd_wr <= 1'b0;
-		row <= 1'b0;
+		data_in = 1'b0;
+		rd_wr = 1'b0;
+		row = 1'b0;
 		
 		#10ns;
 		
 		//Write 1 operation
 		
-		data_in <= 1'b1;
-		rd_wr <= 1'b0;
+		data_in = 1'b1;
+		rd_wr = 1'b0;
 		#10ns;
-		row <= 1'b1;
+		row = 1'b1;
 		#10ns;
-		row <= 1'b0;
+		row = 1'b0;
 		#10ns;
 		
 		//Read operation
 		
-		rd_wr <= 1'b1;
+		rd_wr = 1'b1;
 		#10ns;
-		row <= 1'b1;
+		row = 1'b1;
 		#10ns;
-		row <= 1'b0;
+		row = 1'b0;
 		#10ns;
 		
 		//Write 0 operation
 		
-		data_in <= 1'b0;
-		rd_wr <= 1'b0;
+		data_in = 1'b0;
+		rd_wr = 1'b0;
 		#10ns;
-		row <= 1'b1;
+		row = 1'b1;
 		#10ns;
-		row <= 1'b0;
+		row = 1'b0;
 		#10ns;
 		
 		//Read operation
 		
-		rd_wr <= 1'b1;
+		rd_wr = 1'b1;
 		#10ns;
-		row <= 1'b1;
+		row = 1'b1;
 		#10ns;
-		row <= 1'b0;
+		row = 1'b0;
 		#10ns;
 
         $finish;

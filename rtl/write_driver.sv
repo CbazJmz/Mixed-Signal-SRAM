@@ -1,8 +1,8 @@
 module write_driver #(
     parameter COLS=8)(
-    input  wire [COLS-1:0] data_in,
-    inout wire [COLS-1:0] bl_wr,
-    inout wire [COLS-1:0] blb_wr
+    input logic [COLS-1:0] data_in,
+    inout real [COLS-1:0] bl_wr,
+    inout real [COLS-1:0] blb_wr
 );
     // To set 1 in sram cell    bl = VDD    blb = GND
     // To set 0 in sram cell    bl = GND    blb = VDD
