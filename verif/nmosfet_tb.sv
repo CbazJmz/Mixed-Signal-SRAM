@@ -1,7 +1,7 @@
 module nmosfet_tb();
 	
 	real vg;
-	real vs
+	real vs;
 	real vd;
 	
 	const real VDD =  1.5;
