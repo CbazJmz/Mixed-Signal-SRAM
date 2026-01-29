@@ -1,35 +1,22 @@
-module r_sram_cell_tb#(
-    parameter COLS=1)();
+module r_sram_cell_tb();
 	
-	logic data_in;
 	logic row_wr;
 	logic row_rd;
-	logic preout;
-	logic bl_wr;
-	logic blb_wr;
-	
+	logic out;
+    real bl_wr;
+    real blb_wr;
 	real bl_rd;
 	real blb_rd;
 
-typedef enum logic [1:0] {
-    DATA_TRUE,      // True
-    DATA_FALSE,     // False
-    INDET       	// Indeterminated
-} state_data;
-	
-// As stated in Table 1 of  ERS, the VDD, and VSS pads have the following specifications
 //   ________________________________
-//  |             TRUE   |   FALSE   |
+//  |              VDD   |    VSS    |
 //  |--------------------------------|
-//  |Min Voltage|  1.3   |   -0.5    |
 //  |Typ Voltage|  1.5   |    0.0    |
-//  |Max Voltage|  2.2   |    0.7    |
 //  |________________________________|
-	
-	const real TRUE_MIN =  1.3;
-	const real TRUE_MAX =  2.2;
-	const real FALSE_MIN = -0.5;
-	const real FALSE_MAX =  0.7;
+
+const real VDD =  1.5;
+const real VSS =  0.0;
+const real VTH =  0.8; 
 	
     sram_cell cell1(
     .row_wr (row_wr),
@@ -40,43 +27,29 @@ typedef enum logic [1:0] {
     .blb_rd(blb_rd)
     );
 	
-	write_driver writed1 (
-	.data_in (data_in),
-	.bl_wr (bl_wr),
-	.blb_wr (blb_wr)
-	);
-	
-	sense_amp amp1 (
-	.bl_rd (bl_rd),
-	.blb_rd (blb_rd),
-	.preout (preout)
-	);
-	
-	state_data curr_data_state;
-	
 	always_comb begin
-		if(preout>TRUE_MIN & preout<TRUE_MAX)
-			curr_data_state = DATA_TRUE;
-		else if(preout>FALSE_MIN & preout<FALSE_MAX)
-			curr_data_state = DATA_FALSE;
+		if(bl_rd<blb_rd)
+			out = 1'b0;
+		else if(bl_rd>blb_rd)
+			out = 1'b1;
 		else
-			curr_data_state = INDET;
-	end	
+			out = out;
+	end
 	
-    // Initial procedural block that is executed at t=0
-    // This starts a concurrent process
     initial begin
 	
-		data_in = 1'b0;
 		row_wr = 1'b0;
 		row_rd = 1'b0;
+		out = 1'b0;
+		bl_wr = 0;
+		blb_wr = 0;
 		
-		#10ns;
+		#1ns;
 		
 		//Write 1 operation
 		
-		data_in = 1'b1;
-		#10ns;
+		bl_wr = VDD;
+		blb_wr = VSS;
 		row_wr = 1'b1;
 		#10ns;
 		row_wr = 1'b0;
@@ -91,8 +64,8 @@ typedef enum logic [1:0] {
 		
 		//Write 0 operation
 		
-		data_in = 1'b0;
-		#10ns;
+		bl_wr = VSS;
+		blb_wr = VDD;
 		row_wr = 1'b1;
 		#10ns;
 		row_wr = 1'b0;
