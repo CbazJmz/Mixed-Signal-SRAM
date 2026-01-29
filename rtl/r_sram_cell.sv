@@ -39,36 +39,16 @@ const real VTH =  0.8;
 	);
 
 	always_comb begin
-		if(r_inv1_1<VTH & r_inv2_1>=VTH)
-			inv1 = 1'b0;
-			inv2 = 1'b1;
-		else if(r_inv2_1<VTH & r_inv1_1>=VTH)
-			inv1 = 1'b1;
-			inv2 = 1'b0;
-		else
-			inv1 = inv1;
-			inv2 = inv2;
-	end
-
-    not not1(inv2,inv1);
-    not not2(inv1,inv2);
-	
-	always_comb begin
-		if(inv1 == 1'b1)
-			r_inv1_2 = VDD;
-		else if(inv1 == 1'b0)
+		if(r_inv1_1<VTH & r_inv2_1>=VTH) begin
 			r_inv1_2 = VSS;
-		else
-			r_inv1_2 = r_inv1_2;
-	end
-	
-	always_comb begin
-		if(inv1 == 1'b1)
-			r_inv2_2 = VDD;
-		else if(inv1 == 1'b0)
+			r_inv2_2 = r_inv2_1;
+		end else if(r_inv2_1<VTH & r_inv1_1>=VTH) begin
+			r_inv1_2 = r_inv1_1;
 			r_inv2_2 = VSS;
-		else
+		end else begin
+			r_inv1_2 = r_inv1_2;
 			r_inv2_2 = r_inv2_2;
+		end
 	end
 	
 	nmosfet nmos3(

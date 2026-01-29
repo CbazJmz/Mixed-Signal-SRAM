@@ -18,7 +18,7 @@ always_comb begin
 	if(vg<VTH)
 		vs = VSS;
 	else if(vg>=VTH && vd>=VTH)
-		vs = VDD;
+		vs = vg;
 	else
 		vs = vs;
 end

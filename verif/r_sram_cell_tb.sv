@@ -2,7 +2,6 @@ module r_sram_cell_tb();
 	
 	logic row_wr;
 	logic row_rd;
-	logic out;
     real bl_wr;
     real blb_wr;
 	real bl_rd;
@@ -27,20 +26,10 @@ const real VTH =  0.8;
     .blb_rd(blb_rd)
     );
 	
-	always_comb begin
-		if(bl_rd<blb_rd)
-			out = 1'b0;
-		else if(bl_rd>blb_rd)
-			out = 1'b1;
-		else
-			out = out;
-	end
-	
     initial begin
 	
 		row_wr = 1'b0;
 		row_rd = 1'b0;
-		out = 1'b0;
 		bl_wr = 0;
 		blb_wr = 0;
 		
