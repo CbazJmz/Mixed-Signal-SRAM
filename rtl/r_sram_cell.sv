@@ -39,20 +39,14 @@ const real VTH =  0.8;
 	);
 
 	always_comb begin
-		if(r_inv1_1<VTH)
+		if(r_inv1_1<VTH & r_inv2_1>=VTH)
 			inv1 = 1'b0;
-		else if(r_inv1_1>=VTH)
+			inv2 = 1'b1;
+		else if(r_inv2_1<VTH & r_inv1_1>=VTH)
 			inv1 = 1'b1;
+			inv2 = 1'b0;
 		else
 			inv1 = inv1;
-	end
-	
-	always_comb begin
-		if(r_inv2_1<VTH)
-			inv2 = 1'b0;
-		else if(r_inv2_1>=VTH)
-			inv2 = 1'b1;
-		else
 			inv2 = inv2;
 	end
 
