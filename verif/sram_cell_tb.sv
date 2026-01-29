@@ -46,15 +46,13 @@ const real VTH =  0.8;
 	
 		row_wr = 1'b0;
 		row_rd = 1'b0;
-		bl_wr = 0;
-		blb_wr = 0;
+		data_in = 0;
 		
 		#1ns;
 		
 		//Write 1 operation
 		
-		bl_wr = VDD;
-		blb_wr = VSS;
+		data_in = VDD;
 		row_wr = 1'b1;
 		#10ns;
 		row_wr = 1'b0;
@@ -69,8 +67,7 @@ const real VTH =  0.8;
 		
 		//Write 0 operation
 		
-		bl_wr = VSS;
-		blb_wr = VDD;
+		data_in = VSS;
 		row_wr = 1'b1;
 		#10ns;
 		row_wr = 1'b0;
