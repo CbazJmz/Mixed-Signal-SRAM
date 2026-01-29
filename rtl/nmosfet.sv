@@ -17,7 +17,7 @@ const real VTH =  0.8;
 always_comb begin
 	if(vg<VTH)
 		vs = VSS;
-	else if(vg>=VTH)
+	else if(vg>=VTH && vd>=VTH)
 		vs = VDD;
 	else
 		vs = vs;
