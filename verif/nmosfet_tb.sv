@@ -25,20 +25,24 @@ module nmosfet_tb();
 	always_comb begin
 		vg_falling = vg < $past(vg,1,,@(posedge samp));
 	end
-
+	
+	always begin
+		if ((VSS<vg<VDD && vg_rising)||(vg == VSS)) begin
+			#1ns vg = vg + 0.1;
+		end else if ((VSS<vg<VDD && vg_falling)||(vg == VDD)) begin
+			#1ns vg = vg - 0.1;
+		end else
+			#1ns vg = vg + 0.1;
+	end
+	
     initial begin
 		samp = 1'b0;
 		vd = VDD;
 		vg = VSS;
 		
-		while ((VSS<vg<VDD && vg_rising)||(vg == VSS)) begin
-			#1ns vg = vg + 0.1;
-		end
+		#50ns;
+		$finish;
 		
-		while ((VSS<vg<VDD && vg_falling)||(vg == VDD)) begin
-			#1ns vg = vg - 0.1;
-		end
-
     end
 
     initial begin
