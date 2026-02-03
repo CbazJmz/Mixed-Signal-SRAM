@@ -1,7 +1,7 @@
 module sense_amp#(
     parameter COLS=16)(
     input  logic [COLS-1:0] bl_rd,      //BL line from memory array
-    input  logic [COLS-1;0] blb_rd,     //BLB line from memory array
+    input  logic [COLS-1:0] blb_rd,     //BLB line from memory array
     output real preout [0:COLS-1]      //Output from diff amplifiers
 );
 
