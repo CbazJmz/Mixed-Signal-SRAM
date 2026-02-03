@@ -1,7 +1,7 @@
 module sense_amp#(
     parameter COLS=16)(
-    input  real bl_col [0:COLS-1],      //BL line from memory array
-    input  real blb_col [0:COLS-1],     //BLB line from memory array
+    input  real bl_rd [0:COLS-1],      //BL line from memory array
+    input  real blb_rd [0:COLS-1],     //BLB line from memory array
     output real preout [0:COLS-1]      //Output from diff amplifiers
 );
 
@@ -19,7 +19,7 @@ const real VTH =  0.8;
     //Generate diff amplifiers array
     generate
         for(i=0;i<COLS;i++) begin: COL
-            assign preout [i] = bl_col [i] > blb_col [i] ? VDD : VSS;
+            assign preout [i] = bl_rd [i] > blb_rd [i] ? VDD : VSS;
         end
     endgenerate
 
