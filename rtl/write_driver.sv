@@ -17,14 +17,11 @@ const real VDD =  1.5;
 const real VSS =  0.0;
 const real VTH =  0.8; 
 	
-	logic [COLS-1:0] l_data_in;
-	
     genvar i;
     generate
         for(i=0;i<COLS;i++) begin
-			assign l_data_in = data_in [i] >= VTH ? 1'b1 : 1'b0;
-            assign bl_wr [i]  = l_data_in [i] ? VDD : VSS;
-            assign blb_wr [i] = l_data_in [i] ? VSS : VDD;
+            assign bl_wr [i]  = data_in [i] >= VTH ? VDD : VSS;
+            assign blb_wr [i] = data_in [i] >= VTH ? VSS : VDD;
         end
     endgenerate
 endmodule
