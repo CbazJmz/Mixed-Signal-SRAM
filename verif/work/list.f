@@ -4,8 +4,8 @@
 #        ../../rtl/sense_amp.sv
 #        ../../rtl/write_driver.sv
 		../../rtl/tst/sram_cell.sv
-#		../../rtl/tst/precharge.sv
-#		../../rtl/tst/write_driver.sv
+#                ../../rtl/tst/cell_array.sv
+#                ../../rtl/tst/write_driver.sv
 #		../../rtl/tst/sense_amp.sv
 
 # ============================ verification
