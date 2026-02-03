@@ -1,4 +1,5 @@
 *.swp
 *.history
 *.d
-*.f
+*list.f
+*verif/work/shm_db/
