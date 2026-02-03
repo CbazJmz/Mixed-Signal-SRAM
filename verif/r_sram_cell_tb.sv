@@ -1,11 +1,12 @@
-module r_sram_cell_tb();
+module r_sram_cell_tb #(
+    parameter ROWS=1, COLS=1)();
 	
-	logic row_wr;
-	logic row_rd;
-    real bl_wr;
-    real blb_wr;
-	real bl_rd;
-	real blb_rd;
+	real row_wr [0:ROWS-1];
+	real row_rd [0:ROWS-1];
+    real bl_wr [0:COLS-1];
+    real blb_wr [0:COLS-1];
+	real bl_rd [0:COLS-1];
+	real blb_rd [0:COLS-1];
 
 //   ________________________________
 //  |              VDD   |    VSS    |
@@ -17,7 +18,9 @@ const real VDD =  1.5;
 const real VSS =  0.0;
 const real VTH =  0.8; 
 	
-    sram_cell cell1(
+    cell_array cell1 #(
+    .ROWS (ROWS),
+	.COLS (COLS))(
     .row_wr (row_wr),
 	.row_rd (row_rd),
     .bl_wr (bl_wr),
