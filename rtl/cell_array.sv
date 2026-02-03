@@ -4,8 +4,8 @@ module cell_array #(
 	input  real row_rd [0:ROWS-1],
    	input  real bl_wr [0:COLS-1],
    	input  real blb_wr [0:COLS-1],
-	output  real bl_rd [0:COLS-1],
-   	output  real blb_rd [0:COLS-1]
+	output  logic [COLS-1:0]bl_rd,
+   	output  logic [COLS-1:0]blb_rd
 );
 
 //   ________________________________

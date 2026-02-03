@@ -8,8 +8,8 @@ module sram_array_tb #(
 	real row_rd [0:ROWS-1];
 	real bl_wr [0:COLS-1];
 	real blb_wr [0:COLS-1];
-	real bl_rd [0:COLS-1];
-	real blb_rd [0:COLS-1];
+	logic [COLS-1:0] bl_rd;
+	logic [COLS-1:0] blb_rd;
 
 //   ________________________________
 //  |              VDD   |    VSS    |
