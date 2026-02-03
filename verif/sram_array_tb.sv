@@ -1,6 +1,7 @@
 module sram_array_tb #(
     parameter ROWS=2, COLS=8)();
 	
+	logic [COLS-1:0] data;
 	real data_in [0:COLS-1];
 	real preout [0:COLS-1];
 	real row_wr [0:ROWS-1];
@@ -44,6 +45,11 @@ const real VTH =  0.8;
 		.bl_rd (bl_rd),
     	.blb_rd(blb_rd)
     );
+
+	genvar c;
+	for (c=0;c<COLS;c++) begin: COL
+	    assign data_in [c] = data [c] ? VDD : VSS;
+	end
 	
     initial begin
 	
@@ -52,10 +58,7 @@ const real VTH =  0.8;
 		#1ns;
 		
 		//Write 1 operation
-		genvar c;
-		for(c=0;c<COLS;c++) begin: COL
-            std::randomize (data_in[c]);
-        end
+		data = 8'b10110111;
 		row_wr [0]= VDD;
 		#10ns;
 		row_wr [0]= VSS;
