@@ -1,6 +1,6 @@
 module sram_cell (
-    input  logic row_wr,
-	input  logic row_rd,
+    input  real row_wr,
+	input  real row_rd,
     input  real bl_wr,
     input  real blb_wr,
 	output real bl_rd,
@@ -23,18 +23,24 @@ const real VTH =  0.8;
 	real r_inv1_2;
     real r_inv2_2;
 	
+	logic l_row_wr;
+	logic l_row_rd;
 	logic inv1;
 	logic inv2;
+	
+	assign l_row_rd = row_rd >= VTH ? 1'b1 : 1'b0;
+	assign l_row_wr = row_wr >= VTH ? 1'b1 : 1'b0;
+	
     // Memory cell structure
     nmosfet nmos1(
 	.vd (bl_wr),
-	.vg (row_wr),
+	.vg (l_row_wr),
 	.vs (r_inv1_1)
 	);
 	
 	nmosfet nmos2(
 	.vd (blb_wr),
-	.vg (row_wr),
+	.vg (l_row_wr),
 	.vs (r_inv2_1)
 	);
 
@@ -53,13 +59,13 @@ const real VTH =  0.8;
 	
 	nmosfet nmos3(
 	.vd (r_inv1_2),
-	.vg (row_rd),
+	.vg (l_row_rd),
 	.vs (bl_rd)
 	);
 	
 	nmosfet nmos4(
 	.vd (r_inv2_2),
-	.vg (row_rd),
+	.vg (l_row_rd),
 	.vs (blb_rd)
 	);
 	
