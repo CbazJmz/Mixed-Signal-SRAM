@@ -1,10 +1,10 @@
 module sram_cell (
-    input  real row_wr,
+	input  real row_wr,
 	input  real row_rd,
-    input  real bl_wr,
-    input  real blb_wr,
-	output logic bl_rd,
-	output logic blb_rd
+	input  real bl_wr,
+	input  real blb_wr,
+	output real bl_rd,
+	output real blb_rd
 );
 
 //   ________________________________
@@ -17,11 +17,11 @@ const real VDD =  1.5;
 const real VSS =  0.0;
 const real VTH =  0.8; 
 
-    // NMOS and NOT Gates nodes
-    real r_inv1_1;
-    real r_inv2_1;
+	// NMOS and NOT Gates nodes
+	real r_inv1_1;
+	real r_inv2_1;
 	real r_inv1_2;
-    real r_inv2_2;
+	real r_inv2_2;
 	real r_bl_rd;
 	real r_blb_rd;
 	
@@ -33,8 +33,8 @@ const real VTH =  0.8;
 	assign l_row_rd = row_rd >= VTH ? 1'b1 : 1'b0;
 	assign l_row_wr = row_wr >= VTH ? 1'b1 : 1'b0;
 	
-    // Memory cell structure
-    nmosfet nmos1(
+	// Memory cell structure
+	nmosfet nmos1(
 	.vd (bl_wr),
 	.vg (l_row_wr),
 	.vs (r_inv1_1)
@@ -62,16 +62,13 @@ const real VTH =  0.8;
 	nmosfet nmos3(
 	.vd (r_inv1_2),
 	.vg (l_row_rd),
-	.vs (r_bl_rd)
+	.vs (bl_rd)
 	);
 	
 	nmosfet nmos4(
 	.vd (r_inv2_2),
 	.vg (l_row_rd),
-	.vs (r_blb_rd)
+	.vs (blb_rd)
 	);
-	
-	assign bl_rd = r_bl_rd >= VTH ? 1'b1:1'b0;
-	assign blb_rd = r_blb_rd >= VTH ? 1'b1:1'b0;
 	
 endmodule
