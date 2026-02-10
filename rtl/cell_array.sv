@@ -1,7 +1,6 @@
 module cell_array #(
 	parameter ROWS=16, COLS=8)(
 	input  real row_wr [0:ROWS-1],
-	input  real row_rd [0:ROWS-1],
 	input  real bl_wr [0:COLS-1],
 	input  real blb_wr [0:COLS-1],
 	output  real bl_rd [0:ROWS-1][0:COLS-1],
@@ -17,7 +16,7 @@ module cell_array #(
 const real VDD =  1.5;
 const real VSS =  0.0;
 const real VTH =  0.8;
-	
+
 	logic [ROWS-1:0] l_wr;
 	genvar a;
 	generate
@@ -25,7 +24,7 @@ const real VTH =  0.8;
 			assign l_wr [a] = row_wr [a] >= VTH ? 1'b1 : 1'b0;
 		end
 	endgenerate
-	
+
 	//Rows and columns variables
 	genvar r,c;
 	//Generate memory array
@@ -34,7 +33,6 @@ const real VTH =  0.8;
 			for(r=0;r<ROWS;r++) begin: ROW
 				sram_cell cell1(
 				.row_wr (row_wr[r]),
-				.row_rd (row_rd[r]),
 				.bl_wr (bl_wr[c]),
 				.blb_wr (blb_wr[c]),
 				.bl_rd (bl_rd_array[r][c]),
@@ -43,12 +41,5 @@ const real VTH =  0.8;
 			end
 		end
 	endgenerate
-
-	/*genvar i,j;
-	generate
-		for () begin: AGRP
-			
-		end
-	endgenerate*/
 
 endmodule
