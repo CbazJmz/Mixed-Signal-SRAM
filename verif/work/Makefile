@@ -13,7 +13,7 @@ list:
 	@echo "../verif/${src}_tb.sv" >> list.f
 	
 sim: 
-	xrun ${compile_switches}	
+	xrun ${compile_switches}
 simvision:
 	simvision shm_db
 
