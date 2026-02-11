@@ -38,7 +38,7 @@ const real VTH =  0.8;
 
 //Select data to show
 	logic [COLS-1:0] data_sensed;
-	assign data_sensed = data_mem [row_sensed];
+	assign data_sensed = data_mem [row_sensed-1];
 
 //Logic to real assignment
 	genvar c_o;
