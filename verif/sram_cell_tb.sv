@@ -21,7 +21,6 @@ const real VTH =  0.8;
 	
     sram_cell cell1(
     .row_wr (row_wr),
-	.row_rd (row_rd),
     .bl_wr (bl_wr),
     .blb_wr(blb_wr),
 	.bl_rd (bl_rd),
@@ -35,6 +34,7 @@ const real VTH =  0.8;
 	);
 	
 	sense_amp amp1 (
+	.row_rd (row_rd),
 	.bl_rd (bl_rd),
 	.blb_rd (blb_rd),
 	.preout (preout)

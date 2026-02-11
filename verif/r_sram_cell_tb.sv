@@ -5,8 +5,9 @@ module r_sram_cell_tb #(
 	real row_rd [0:ROWS-1];
     	real bl_wr [0:COLS-1];
     	real blb_wr [0:COLS-1];
-	real bl_rd [0:COLS-1];
-	real blb_rd [0:COLS-1];
+	real bl_rd [0:ROWS-1][0:COLS-1];
+	real blb_rd [0:ROWS-1][0:COLS-1];
+	real preout [0:COLS-1];
 
 //   ________________________________
 //  |              VDD   |    VSS    |
@@ -22,11 +23,19 @@ const real VTH =  0.8;
    	.ROWS (ROWS),
 	.COLS (COLS)) cell1(
     	.row_wr (row_wr),
-	.row_rd (row_rd),
     	.bl_wr (bl_wr),
     	.blb_wr(blb_wr),
 	.bl_rd (bl_rd),
     	.blb_rd(blb_rd)
+    );
+
+    sense_amp #(
+    	.ROWS (ROWS),
+	.COLS (COLS)) s1(
+    	.row_rd (row_rd),
+	.bl_rd (bl_rd),
+	.blb_rd (blb_rd),
+	.preout (preout)
     );
 	
     initial begin
