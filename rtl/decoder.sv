@@ -1,5 +1,5 @@
 module decoder #(
-	parameter ROWS=16(
+	parameter ROWS=16)(
 	input  real row_sel [0:$clog2(ROWS)-1],
 	output real row_onehot [0:ROWS-1]
 );

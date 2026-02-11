@@ -35,8 +35,8 @@ const real VTH =  0.8;
 				.row_wr (row_wr[r]),
 				.bl_wr (bl_wr[c]),
 				.blb_wr (blb_wr[c]),
-				.bl_rd (bl_rd_array[r][c]),
-				.blb_rd (blb_rd_array[r][c])
+				.bl_rd (bl_rd [r][c]),
+				.blb_rd (blb_rd [r][c])
 				);
 			end
 		end

@@ -21,7 +21,7 @@ const real VTH =  0.8;
 	genvar s;
 	generate
 		for(s=0;s<ROWS;s++) begin: SEL1
-			assign row_sensed [s] = row_sel [s] >= VTH ? 1'b1 : 1'b0;
+			assign row_sensed [s] = row_rd [s] >= VTH ? 1'b1 : 1'b0;
 		end
 	endgenerate
 
@@ -38,18 +38,13 @@ const real VTH =  0.8;
 
 //Select data to show
 	logic [COLS-1:0] data_sensed;
-	genvar a;
-	generate
-		for (a=0;a<ROWS;a++) begin: LASSIGN
-			assign data_sensed [COLS-1:0] = row_sensed [a] == 1'b1 ? data_mem [a] [0:COLS-1] : 1'b0;
-		end
-	endgenerate
+	assign data_sensed = data_mem [row_sensed];
 
 //Logic to real assignment
 	genvar c_o;
 	generate
 		for(c_o=0;c_o<COLS;c_o++) begin: COL2
-			assign preout [c_o]= data_sensed [c_o] == 1'b ? VDD : VSS;
+			assign preout [c_o]= data_sensed [c_o] == 1'b1 ? VDD : VSS;
 		end
 	endgenerate
 
