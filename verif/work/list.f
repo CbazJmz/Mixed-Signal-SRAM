@@ -10,6 +10,8 @@
 ../../rtl/decoder.sv
 ../../rtl/sense_amp.sv
 ../../rtl/cell_array.sv
+../../rtl/sipo.sv
+../../rtl/sram_top.sv
 
 #TB
 #../nmosfet.sv

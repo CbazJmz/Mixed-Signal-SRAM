@@ -75,13 +75,13 @@ const real VTH =  0.8;
 	decoder #(
 	.ROWS (ROWS)) decoder_wr(
 	.row_sel (row_sel_wr),
-	.row_wr (row_wr)
+	.row_out (row_wr)
 	);
 
 	decoder #(
 	.ROWS (ROWS)) decoder_rd(
 	.row_sel (row_sel_rd),
-	.row_wr (row_wr)
+	.row_out (row_rd)
 	);
 
 	sense_amp #(
@@ -97,7 +97,7 @@ const real VTH =  0.8;
 	genvar b;
 	generate
 		for(b=0;b<COLS;b++) begin: conv2
-			assign data_out [a]= preout [a] >= VTH ? 1b'1 : 1'b0;
+			assign data_out [b]= preout [b] >= VTH ? 1'b1 : 1'b0;
 		end
 	endgenerate
 
