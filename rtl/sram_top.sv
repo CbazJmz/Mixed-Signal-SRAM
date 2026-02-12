@@ -83,7 +83,7 @@ const real VTH =  0.8;
 	endgenerate
 
 	decoder #(
-	.ROWS ($clog2(ROWS))) decoder_wr(
+	.ROWS (ROWS)) decoder_wr(
 	.row_sel (row_sel_wr),
 	.row_out (row_wr)
 	);
@@ -96,7 +96,7 @@ const real VTH =  0.8;
 	endgenerate
 
 	decoder #(
-	.ROWS ($clog2(ROWS))) decoder_rd(
+	.ROWS (ROWS)) decoder_rd(
 	.row_sel (row_sel_rd),
 	.row_out (row_rd)
 	);
