@@ -1,7 +1,7 @@
 module decoder #(
 	parameter ROWS=16)(
-	input  real row_sel [0:$clog2(ROWS)-1],
-	output real row_out [0:ROWS-1]
+	input  real row_sel [0:ROWS-1],
+	output real row_out [0:(2^ROWS)-1]
 );
 
 //   ________________________________
@@ -24,13 +24,13 @@ const real VTH =  0.8;
 	endgenerate
 
 //Onehot decoder
-	logic [ROWS-1:0] row;
+	logic [(2^ROWS)-1:0] row;
 	assign row = row_selected == 0 ? '0 : '0 + (1'b1 << (row_selected-1));
 	
 //Logic to real convertion
 	genvar o;
 	generate
-		for(o=0;o<ROWS;o++) begin: OUT1
+		for(o=0;o<(2^ROWS);o++) begin: OUT1
 			assign row_out [o] = row [o] == 1'b1 ? VDD : VSS;
 		end
 	endgenerate
