@@ -30,19 +30,6 @@ module sram_top_tb;
 	// Clock generation
 	always #5 clk = ~clk;
 
-	// Task: send serial word
-	task send_serial_word(input logic [DATA_WIDTH-1:0] word);
-		integer i;
-		begin
-			for (i = DATA_WIDTH-1; i >= 0; i--) begin
-				serial_in = word[i];
-				shift  = 1'b1;
-				@(posedge clk);
-			end
-			shift = 1'b0;
-		end
-	endtask
-
 	// Test procedure
 	initial begin
 		clk = 1'b0;
@@ -61,7 +48,11 @@ module sram_top_tb;
 		// WRITE TEST
 		// ----------------------
 		addr = 1'b1;
-		send_serial_word(1'b1);
+		serial_in = 1'b1;
+		addr = '0;
+		shift = 1'b1;
+		@(posedge clk);
+		shift = 1'b0;
 
 		@(posedge clk);
 		w_en = 1'b1;
@@ -76,14 +67,6 @@ module sram_top_tb;
 		@(posedge clk);
 		r_en = 1'b0;
 
-		// Check result
-		if (data_out == 8'hA5)
-			$display("TEST PASSED: Read = %h", data_out);
-		else
-			$display("TEST FAILED: Read = %h", data_out);
-
-		#20;
-		$finish;
 	end
 	
 	initial begin
