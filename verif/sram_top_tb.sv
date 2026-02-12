@@ -85,5 +85,10 @@ module sram_top_tb;
 		#20;
 		$finish;
 	end
+	
+	initial begin
+		$shm_open("shm_db");
+		$shm_probe("ASMTR");
+	end
 
 endmodule
