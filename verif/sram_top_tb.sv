@@ -1,7 +1,7 @@
 module sram_top_tb;
 
 	parameter DATA_WIDTH = 1;
-	parameter ADDR_WIDTH = 1;
+	parameter ADDR_WIDTH = 2;
 
 	logic clk;
 	logic arst_n;
@@ -60,8 +60,8 @@ module sram_top_tb;
 		// ----------------------
 		// WRITE TEST
 		// ----------------------
-		addr = 4'h3;
-		send_serial_word(8'hA5);
+		addr = 1'b1;
+		send_serial_word(1'b1);
 
 		@(posedge clk);
 		w_en = 1'b1;
