@@ -1,7 +1,7 @@
 module decoder #(
 	parameter ROWS=16)(
 	input  real row_sel [0:$clog2(ROWS)-1],
-	output real row_onehot [0:ROWS-1]
+	output real row_wr [0:ROWS-1]
 );
 
 //   ________________________________
@@ -31,7 +31,7 @@ const real VTH =  0.8;
 	genvar o;
 	generate
 		for(o=0;o<ROWS;o++) begin: OUT1
-			assign row_onehot [o] = row [o] == 1'b1 ? VDD : VSS;
+			assign row_wr [o] = row [o] == 1'b1 ? VDD : VSS;
 		end
 	endgenerate
 
