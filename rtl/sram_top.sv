@@ -114,7 +114,7 @@ const real VTH =  0.8;
 	genvar d;
 	generate
 		for(d=0;d<COLS;d++) begin: conv4
-			assign data_out [d]= rd_en == 1'b1 ? (preout [d] >= VTH ? 1'b1 : 1'b0) : VSS;
+			assign data_out [d]= r_en == 1'b1 ? (preout [d] >= VTH ? 1'b1 : 1'b0) : VSS;
 		end
 	endgenerate
 

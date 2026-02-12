@@ -36,7 +36,7 @@ module sram_top_tb;
 		begin
 			for (i = DATA_WIDTH-1; i >= 0; i--) begin
 				serial_in = word[i];
-				shift_en  = 1'b1;
+				shift  = 1'b1;
 				@(posedge clk);
 			end
 			shift = 1'b0;
