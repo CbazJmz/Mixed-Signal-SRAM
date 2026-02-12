@@ -1,5 +1,15 @@
 module sram_top #(
-	parameter ROWS=16, COLS=8)();
+	parameter ROWS=16, COLS=8)(
+	input logic clk,
+	input logic arst_n,
+	input logic serial_in,
+	input logic w_en,
+	input logic r_en,
+	input logic shift,
+	input logic [ROWS-1:0]addr,
+	output logic data_valid,
+	output logic [COLS-1:0]data_out
+	);
 
 //   ________________________________
 //  |              VDD   |    VSS    |
@@ -12,15 +22,7 @@ const real VSS =  0.0;
 const real VTH =  0.8;
 
 //Signals to serial input - parallel output
-	logic clk;
-	logic arst_n;
-	logic w_en;
-	logic r_en;
-	logic serial_in;
-	logic load;
-	logic shift;
 	logic [COLS-1:0]parallel_out;
-	logic [COLS-1:0]data_out;
 //Signals to write circuit
 	real data_in [0:COLS-1];
 //Signals to memory array
@@ -42,7 +44,7 @@ const real VTH =  0.8;
 	.clk (clk),
 	.arst_n (arst_n),
 	.serial_in (serial_in),
-	.load (load),
+	.load (w_en),
 	.shift (shift),
 	.parallel_out (parallel_out)
 	);
@@ -72,11 +74,26 @@ const real VTH =  0.8;
 	.blb_rd(blb_rd)
 	);
 
+//Digital to analog converter row_sel_wr
+	genvar b;
+	generate
+		for(b=0;b<COLS;b++) begin: conv2
+			assign row_sel_wr [b]= addr [b] == 1'b1 ? VDD : VSS;
+		end
+	endgenerate
+
 	decoder #(
 	.ROWS (ROWS)) decoder_wr(
 	.row_sel (row_sel_wr),
 	.row_out (row_wr)
 	);
+
+	genvar c;
+	generate
+		for(c=0;c<COLS;c++) begin: conv3
+			assign row_sel_rd [c]= addr [c] == 1'b1 ? VDD : VSS;
+		end
+	endgenerate
 
 	decoder #(
 	.ROWS (ROWS)) decoder_rd(
@@ -94,11 +111,13 @@ const real VTH =  0.8;
 	);
 
 //Analog to digital converter output
-	genvar b;
+	genvar d;
 	generate
-		for(b=0;b<COLS;b++) begin: conv2
-			assign data_out [b]= preout [b] >= VTH ? 1'b1 : 1'b0;
+		for(d=0;d<COLS;d++) begin: conv4
+			assign data_out [d]= rd_en == 1'b1 ? (preout [d] >= VTH ? 1'b1 : 1'b0) : VSS;
 		end
 	endgenerate
+
+	assign data_valid = r_en == 1'b1 ? 1'b1 : 1'b0;
 
 	endmodule
