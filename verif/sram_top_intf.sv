@@ -40,7 +40,8 @@ interface sram_top_intf (
 		begin
 			for (i = 0; i < $clog2(ROWS); i++) begin
 				addr = i;
-				send_serial_word(std::randomize(word1));
+				std::randomize(word1);
+				send_serial_word(word1);
 				@(posedge clk);
 				w_en = 1'b1;
 				@(posedge clk);
@@ -67,7 +68,8 @@ interface sram_top_intf (
 		logic [COLS-1:0] random_data;
 		if($urandom_range(0,1) == 1) begin
 			addr = addr1;
-			send_serial_word(std::randomize(random_data));
+			std::randomize(random_data);
+			send_serial_word(random_data);
 			@(posedge clk);
 			w_en = 1'b1;
 			@(posedge clk);

@@ -20,4 +20,4 @@
 #../sram_cell_tb.sv
 ../covs.sv
 ../sram_top_intf.sv
-../0213/sram_top_tb.sv
+../sram_top_tb.sv
