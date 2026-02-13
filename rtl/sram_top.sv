@@ -38,8 +38,7 @@ const real VTH =  0.8;
 //Signals to row decoder / reader
 	real row_sel_rd [0:$clog2(ROWS)-1];
 
-	sipo#(
-	.COLS (COLS)) sipo1(
+	sipo sipo1(
 	.clk (clk),
 	.arst_n (arst_n),
 	.serial_in (serial_in),
@@ -56,16 +55,13 @@ const real VTH =  0.8;
 		end
 	endgenerate
 
-	write_driver #(
-	.COLS (COLS)) writer1(
+	write_driver writer1(
 	.data_in (data_in),
 	.bl_wr (bl_wr),
 	.blb_wr(blb_wr)
 	);
 
-	cell_array #(
-	.ROWS (ROWS),
-	.COLS (COLS)) cell1(
+	cell_array cell1(
 	.row_wr (row_wr),
 	.bl_wr (bl_wr),
 	.blb_wr(blb_wr),
@@ -81,8 +77,7 @@ const real VTH =  0.8;
 		end
 	endgenerate
 
-	decoder #(
-	.ROWS (ROWS)) decoder_wr(
+	decoder decoder_wr(
 	.enable (w_en),
 	.row_sel (row_sel_wr),
 	.row_out (row_wr)
@@ -95,16 +90,13 @@ const real VTH =  0.8;
 		end
 	endgenerate
 
-	decoder #(
-	.ROWS (ROWS)) decoder_rd(
+	decoder decoder_rd(
 	.enable (1'b1),
 	.row_sel (row_sel_rd),
 	.row_out (row_rd)
 	);
 
-	sense_amp #(
-	.ROWS (ROWS),
-	.COLS (COLS)) lines_comp1(
+	sense_amp lines_comp1(
 	.row_rd (row_rd),
 	.bl_rd (bl_rd),
 	.blb_rd (blb_rd),

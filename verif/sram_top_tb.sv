@@ -10,9 +10,7 @@ module sram_top_tb;
 	logic data_valid;
 	logic [COLS-1:0]data_out;
 
-	sram_top #(
-	.ROWS (ROWS),
-	.COLS (COLS)) sram1(
+	sram_top sram1(
 	.clk (clk),
 	.arst_n (arst_n),
 	.serial_in (serial_in),
