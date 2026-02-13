@@ -57,7 +57,7 @@ module sram_top_tb;
 		// ----------------------
 		addr = 1'b1;
 		
-		send_serial_word('1);
+		send_serial_word(8'b10011101);
 
 		@(posedge clk);
 		w_en = 1'b1;
