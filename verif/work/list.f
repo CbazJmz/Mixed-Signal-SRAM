@@ -1,7 +1,9 @@
 #Defines
-#../../rtl/defines.svh
+../../rtl/defines.svh
 
 #FV
+../../fv/property_defines.svh
+../../fv/fv_sram.sv
 
 #RTL
 ../../rtl/nmosfet.sv

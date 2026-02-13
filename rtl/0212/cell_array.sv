@@ -1,7 +1,8 @@
-module cell_array (
+module cell_array #(
+	parameter ROWS=16, COLS=8)(
 	input  real row_wr [0:ROWS-1],
-	input  real bl_wr [0][0:COLS-1],
-	input  real blb_wr [0][0:COLS-1],
+	input  real bl_wr [0:COLS-1],
+	input  real blb_wr [0:COLS-1],
 	output  real bl_rd [0:ROWS-1][0:COLS-1],
 	output  real blb_rd [0:ROWS-1][0:COLS-1]
 );
@@ -32,8 +33,8 @@ const real VTH =  0.8;
 			for(r=0;r<ROWS;r++) begin: ROW
 				sram_cell cell1(
 				.row_wr (row_wr[r]),
-				.bl_wr (bl_wr [0][c]),
-				.blb_wr (blb_wr [0][c]),
+				.bl_wr (bl_wr[c]),
+				.blb_wr (blb_wr[c]),
 				.bl_rd (bl_rd [r][c]),
 				.blb_rd (blb_rd [r][c])
 				);

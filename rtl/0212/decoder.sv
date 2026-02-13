@@ -1,5 +1,5 @@
-module decoder (
-	input logic enable,
+module decoder #(
+	parameter ROWS=16)(
 	input  real row_sel [0:$clog2(ROWS)-1],
 	output real row_out [0:ROWS-1]
 );
@@ -25,7 +25,7 @@ const real VTH =  0.8;
 
 //Onehot decoder
 	logic [ROWS-1:0] row;
-	assign row = enable ? '0 + (1'b1 << (row_selected)) : '0;
+	assign row = '0 + (1'b1 << (row_selected));
 	
 //Logic to real convertion
 	genvar o;

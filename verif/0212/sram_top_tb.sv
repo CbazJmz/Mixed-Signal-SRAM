@@ -1,18 +1,21 @@
 module sram_top_tb;
 
+	parameter DATA_WIDTH = 1;
+	parameter ADDR_WIDTH = 2;
+
 	logic clk;
 	logic arst_n;
 	logic serial_in;
 	logic shift;
 	logic w_en;
 	logic r_en;
-	logic [$clog2(ROWS)-1:0]addr;
+	logic [ADDR_WIDTH-1:0] addr;
+	logic [DATA_WIDTH-1:0] data_out;
 	logic data_valid;
-	logic [COLS-1:0]data_out;
 
 	sram_top #(
-	.ROWS (ROWS),
-	.COLS (COLS)) sram1(
+	.ROWS (ADDR_WIDTH),
+	.COLS (DATA_WIDTH)) sram1(
 	.clk (clk),
 	.arst_n (arst_n),
 	.serial_in (serial_in),
@@ -27,19 +30,6 @@ module sram_top_tb;
 	// Clock generation
 	always #5 clk = ~clk;
 
-	// Task: send serial word
-	task send_serial_word(input logic [COLS-1:0] word);
-		integer i;
-		begin
-			for (i = COLS-1; i >= 0; i--) begin
-				serial_in = word[i];
-				shift  = 1'b1;
-				repeat (2) @(posedge clk);
-			end
-			shift = 1'b0;
-		end
-	endtask
-
 	// Test procedure
 	initial begin
 		clk = 1'b0;
@@ -48,7 +38,7 @@ module sram_top_tb;
 		shift = 1'b0;
 		w_en = 1'b0;
 		r_en = 1'b0;
-		addr = '0;
+		addr = 1'b0;
 
 		// Reset
 		#20;
@@ -58,8 +48,11 @@ module sram_top_tb;
 		// WRITE TEST
 		// ----------------------
 		addr = 1'b1;
-		
-		send_serial_word('1);
+		serial_in = 1'b1;
+		addr = 1'b1;
+		shift = 1'b1;
+		#15;
+		shift = 1'b0;
 
 		@(posedge clk);
 		w_en = 1'b1;
@@ -73,7 +66,6 @@ module sram_top_tb;
 		r_en = 1'b1;
 		@(posedge clk);
 		r_en = 1'b0;
-
 		#30;
 		$finish;
 
