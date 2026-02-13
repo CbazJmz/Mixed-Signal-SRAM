@@ -29,30 +29,27 @@ module sram_top_tb;
 	// Clock generation
 	always #5 clk = ~clk;
 
-	// Task: send serial word
-	task send_serial_word(input logic [COLS-1:0] word);
-		integer i;
-		begin
-			for (i = COLS-1; i >= 0; i--) begin
-				serial_in = word[i];
-				shift  = 1'b1;
-				repeat (2) @(posedge clk);
-			end
-			shift = 1'b0;
-		end
-	endtask
-
 	// Test procedure
 	initial begin
 		//initialize
+		clk = 1'b0;
+		arst_n = 1'b0;
+		serial_in = 1'b0;
+		shift = 1'b0;
+		w_en = 1'b0;
+		r_en = 1'b0;
+		addr = '0;
+
+		// Reset
+		#20;
 		arst_n = 1'b1;
-		int1.initialize();
 
 		// write test
 		int1.full_write();
 		
 		// read test
 		int1.full_read ();
+
 
 		#30;
 		$finish;
