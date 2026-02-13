@@ -1,2 +1,2 @@
-parameter ROWS=2;
+parameter ROWS=8;
 parameter COLS=8;

@@ -47,7 +47,7 @@ module sram_top_tb;
 		int1.full_read ();
 
 
-		#30;
+		#300;
 		$finish;
 
 	end
