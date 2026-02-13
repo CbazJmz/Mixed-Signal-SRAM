@@ -2,6 +2,7 @@ module sram_top (
 	input logic clk,
 	input logic arst_n,
 	input logic serial_in,
+	input logic load,
 	input logic w_en,
 	input logic r_en,
 	input logic shift,
@@ -42,7 +43,7 @@ const real VTH =  0.8;
 	.clk (clk),
 	.arst_n (arst_n),
 	.serial_in (serial_in),
-	.load (w_en),
+	.load (load),
 	.shift (shift),
 	.parallel_out (parallel_out)
 	);

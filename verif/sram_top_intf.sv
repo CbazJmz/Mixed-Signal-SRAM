@@ -95,6 +95,7 @@ interface sram_top_intf (
 
 	logic serial_in;
 	logic shift;
+	logic load;
 	logic w_en;
 	logic r_en;
 	logic [$clog2(ROWS)-1:0]addr;
@@ -104,6 +105,7 @@ interface sram_top_intf (
 	task automatic initialize();
 		serial_in = 1'b0;
 		shift = 1'b0;
+		load = 1'b0;
 		w_en = 1'b0;
 		r_en = 1'b0;
 		addr = '0;
@@ -135,9 +137,9 @@ interface sram_top_intf (
 				addr = i;
 				std::randomize(word1);
 				send_serial_word(word1);
-				w_en = 1'b1;
+				load = 1'b1;
 				@(posedge clk);
-				w_en = 1'b0;
+				load = 1'b0;
 				@(posedge clk);
 				w_en = 1'b1;
 				@(posedge clk);
@@ -167,6 +169,9 @@ interface sram_top_intf (
 			addr = addr1;
 			std::randomize(random_data);
 			send_serial_word(random_data);
+			load = 1'b1;
+			@(posedge clk);
+			load = 1'b0;
 			@(posedge clk);
 			w_en = 1'b1;
 			@(posedge clk);

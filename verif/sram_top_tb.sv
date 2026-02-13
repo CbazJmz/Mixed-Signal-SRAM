@@ -4,6 +4,7 @@ module sram_top_tb;
 	logic arst_n;
 	logic serial_in;
 	logic shift;
+	logic load;
 	logic w_en;
 	logic r_en;
 	logic [$clog2(ROWS)-1:0]addr;
@@ -14,6 +15,7 @@ module sram_top_tb;
 	.clk (clk),
 	.arst_n (arst_n),
 	.serial_in (int1.serial_in),
+	.load (int1.load),
 	.w_en (int1.w_en),
 	.r_en (int1.r_en),
 	.shift (int1.shift),

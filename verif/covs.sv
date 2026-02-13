@@ -4,6 +4,7 @@ module cov_sram (
 
 	input logic serial_in,
 	input logic shift,
+	input logic load,
 	input logic w_en,
 	input logic r_en,
 	input logic [$clog2(ROWS)-1:0]addr,
