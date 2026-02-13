@@ -18,6 +18,6 @@
 #TB
 #../nmosfet.sv
 #../sram_cell_tb.sv
-#../r_sram_cell_tb.sv
-#../sram_array_tb.sv
-../sram_top_tb.sv
+../covs.sv
+../sram_top_intf.sv
+../0213/sram_top_tb.sv

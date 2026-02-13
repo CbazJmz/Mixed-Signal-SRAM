@@ -2,13 +2,13 @@ module cov_sram (
 	input logic clk,
 	input logic arst_n,
 
-	input logic serial_in;
-	input logic shift;
-	input logic w_en;
-	input logic r_en;
-	input logic [$clog2(ROWS)-1:0]addr;
-	input logic data_valid;
-	input logic [COLS-1:0]data_out;
+	input logic serial_in,
+	input logic shift,
+	input logic w_en,
+	input logic r_en,
+	input logic [$clog2(ROWS)-1:0]addr,
+	input logic data_valid,
+	input logic [COLS-1:0]data_out
 );
 
 	`define SRAM_PATH sram1
@@ -35,4 +35,4 @@ module cov_sram (
 
 	endgroup: rd_port_cg
 
-endmodule: cov_sfifo
+endmodule: cov_sram

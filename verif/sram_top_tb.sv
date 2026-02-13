@@ -45,6 +45,7 @@ module sram_top_tb;
 	// Test procedure
 	initial begin
 		//initialize
+		arst_n = 1'b1;
 		int1.initialize();
 
 		// write test

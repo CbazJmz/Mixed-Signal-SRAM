@@ -12,16 +12,12 @@ interface sram_top_intf (
 	logic [COLS-1:0]data_out;
 
 	task automatic initialize();
-		clk = 1'b0;
-		arst_n = 1'b0;
 		serial_in = 1'b0;
 		shift = 1'b0;
 		w_en = 1'b0;
 		r_en = 1'b0;
 		addr = '0;
-		// Reset
 		#20;
-		arst_n = 1'b1;
 	endtask
 
 	// Task: send serial word
@@ -37,9 +33,10 @@ interface sram_top_intf (
 		end
 	endtask
 
-	task automatic full_write(input logic [COLS-1:0] word1);
+	task automatic full_write();
 		integer i;
 		integer j;
+		logic [COLS-1:0] word1;
 		begin
 			for (i = 0; i < $clog2(ROWS); i++) begin
 				addr = i;
@@ -66,10 +63,11 @@ interface sram_top_intf (
 		end
 	endtask
 
-	task automatic wr_or_rd_random(input logic [COLS-1:0] random_data, input logic [$clog2(ROWS)-1:0] addr1);
+	task automatic wr_or_rd_random(input logic [$clog2(ROWS)-1:0] addr1);
+		logic [COLS-1:0] random_data;
 		if($urandom_range(0,1) == 1) begin
 			addr = addr1;
-			send_serial_word(random_data);
+			send_serial_word(std::randomize(random_data));
 			@(posedge clk);
 			w_en = 1'b1;
 			@(posedge clk);
