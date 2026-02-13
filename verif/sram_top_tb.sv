@@ -49,9 +49,9 @@ module sram_top_tb;
 		// ----------------------
 		addr = 1'b1;
 		serial_in = 1'b1;
-		addr = '0;
+		addr = 1'b1;
 		shift = 1'b1;
-		@(posedge clk);
+		#15;
 		shift = 1'b0;
 
 		@(posedge clk);
@@ -66,6 +66,8 @@ module sram_top_tb;
 		r_en = 1'b1;
 		@(posedge clk);
 		r_en = 1'b0;
+		#30;
+		$finish;
 
 	end
 	

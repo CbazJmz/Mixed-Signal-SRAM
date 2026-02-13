@@ -18,6 +18,8 @@ const real VTH =  0.8;
 
 //Real to logic convertion of selector
 	logic [ROWS-1:0] row_sensed;
+	logic [ROWS-1:0] row_sensed1;
+	assign row_sensed1 = row_sensed - 1'b1;
 	genvar s;
 	generate
 		for(s=0;s<ROWS;s++) begin: SEL1
@@ -31,14 +33,14 @@ const real VTH =  0.8;
 	generate
 		for(r=0;r<ROWS;r++) begin: ROW1
 			for(c=0;c<COLS;c++) begin: COL1
-				assign data_mem [r] [c]= (bl_rd [r][c] >= VTH) & (blb_rd [r][c] < VTH) ? 1'b1 : ((bl_rd [r][c] < VTH) & (blb_rd [r][c] >= VTH) ? 1'b0 : 'z);
+				assign data_mem [c] [r]= (bl_rd [r][c] >= VTH) & (blb_rd [r][c] < VTH) ? 1'b0 : ((bl_rd [r][c] < VTH) & (blb_rd [r][c] >= VTH) ? 1'b1 : 'z);
 			end
 		end
 	endgenerate
 
 //Select data to show
 	logic [COLS-1:0] data_sensed;
-	assign data_sensed = data_mem [row_sensed-1];
+	assign data_sensed = data_mem [row_sensed1];
 
 //Logic to real assignment
 	genvar c_o;
