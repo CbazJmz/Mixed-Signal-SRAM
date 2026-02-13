@@ -1,7 +1,7 @@
 module cell_array (
 	input  real row_wr [0:ROWS-1],
-	input  real bl_wr [0][0:COLS-1],
-	input  real blb_wr [0][0:COLS-1],
+	input  real bl_wr [0:0][0:COLS-1],
+	input  real blb_wr [0:0][0:COLS-1],
 	output  real bl_rd [0:ROWS-1][0:COLS-1],
 	output  real blb_rd [0:ROWS-1][0:COLS-1]
 );

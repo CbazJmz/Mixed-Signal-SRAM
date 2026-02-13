@@ -2,7 +2,7 @@ module sense_amp(
 	input  real row_rd [0:ROWS-1],
 	input  real bl_rd [0:ROWS-1][0:COLS-1],      //BL line from memory array
 	input  real blb_rd [0:ROWS-1][0:COLS-1],     //BLB line from memory array
-	output real preout [0][0:COLS-1]      //Output from diff amplifiers
+	output real preout [0:0][0:COLS-1]      //Output from diff amplifiers
 );
 
 //   ________________________________
@@ -36,7 +36,7 @@ const real VTH =  0.8;
 	endgenerate
 
 //Select data to show
-	logic data_sensed [0] [0:COLS-1];
+	logic data_sensed [0:0] [0:COLS-1];
 	genvar i;
 	generate
 		for(i=0;i<COLS;i++) begin: COL2

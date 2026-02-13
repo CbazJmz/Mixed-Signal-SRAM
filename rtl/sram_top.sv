@@ -23,18 +23,18 @@ const real VTH =  0.8;
 //Signals to serial input - parallel output
 	logic [COLS-1:0]parallel_out;
 //Signals to write circuit
-	real data_in [0][0:COLS-1];
+	real data_in [0:0][0:COLS-1];
 //Signals to memory array
 	real row_wr [0:ROWS-1];
-	real bl_wr [0][0:COLS-1];
-	real blb_wr [0][0:COLS-1];
+	real bl_wr [0:0][0:COLS-1];
+	real blb_wr [0:0][0:COLS-1];
 	real bl_rd [0:ROWS-1][0:COLS-1];
 	real blb_rd [0:ROWS-1][0:COLS-1];
 //Signals to row decoder / writer
 	real row_sel_wr [0:$clog2(ROWS)-1];
 //Signals to sense amplificators
 	real row_rd [0:ROWS-1];
-	real preout [0][0:COLS-1];
+	real preout [0:0][0:COLS-1];
 //Signals to row decoder / reader
 	real row_sel_rd [0:$clog2(ROWS)-1];
 

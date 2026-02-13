@@ -1,7 +1,7 @@
 module write_driver (
-    input real data_in [0][0:COLS-1],
-    output real bl_wr [0][0:COLS-1],
-    output real blb_wr [0][0:COLS-1]
+    input real data_in [0:0][0:COLS-1],
+    output real bl_wr [0:0][0:COLS-1],
+    output real blb_wr [0:0][0:COLS-1]
 );
     // To set 1 in sram cell    bl = VDD    blb = GND
     // To set 0 in sram cell    bl = GND    blb = VDD
