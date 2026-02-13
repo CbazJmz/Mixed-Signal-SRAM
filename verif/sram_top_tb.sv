@@ -34,11 +34,7 @@ module sram_top_tb;
 		//initialize
 		clk = 1'b0;
 		arst_n = 1'b0;
-		serial_in = 1'b0;
-		shift = 1'b0;
-		w_en = 1'b0;
-		r_en = 1'b0;
-		addr = '0;
+		int1.initialize();
 
 		// Reset
 		#20;
