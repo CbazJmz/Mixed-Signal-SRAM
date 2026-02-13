@@ -28,8 +28,8 @@ const real VTH =  0.8;
 	genvar r,c;
 	//Generate memory array
 	generate
-		for(r=0;r<ROWS;r++) begin: ROW
-			for(c=0;c<COLS;c++) begin: COL
+		for(c=0;c<COLS;c++) begin: COL
+			for(r=0;r<ROWS;r++) begin: ROW
 				sram_cell cell1(
 				.row_wr (row_wr[r]),
 				.bl_wr (bl_wr [0][c]),

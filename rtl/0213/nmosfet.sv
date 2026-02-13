@@ -1,9 +1,7 @@
-module sram_cell (
-	input  real row_wr,
-	input  real bl_wr,
-	input  real blb_wr,
-	output real bl_rd,
-	output real blb_rd
+module nmosfet(
+	input real vd,
+	input real vg,
+	output real vs
 );
 
 //   ________________________________
@@ -16,14 +14,13 @@ const real VDD =  1.5;
 const real VSS =  0.0;
 const real VTH =  0.8; 
 
-	always_comb begin
-		if (row_wr >= VTH) begin
-			bl_rd = bl_wr;
-			blb_rd = blb_wr;
-		end else begin
-			bl_rd = bl_rd;
-			blb_rd = blb_rd;
-		end
-	end
+always_comb begin
+	if(vg<VTH)
+		vs = VSS;
+	else if(vg>=VTH && vd>=VTH)
+		vs = VDD;
+	else
+		vs = vs;
+end
 
 endmodule
