@@ -1,14 +1,18 @@
+//*****************************************
+// Module top of sram arquitecture
+//*****************************************
+
 module sram_top (
-	input logic clk,
-	input logic arst_n,
-	input logic serial_in,
-	input logic load,
-	input logic w_en,
-	input logic r_en,
-	input logic shift,
-	input logic [$clog2(ROWS)-1:0]addr,
-	output logic data_valid,
-	output logic [COLS-1:0]data_out
+	input logic clk,					//Clock signal
+	input logic arst_n,					//Reset signal
+	input logic serial_in,				//Serial data in pin to shift register
+	input logic load,					//Load pin to shift register
+	input logic w_en,					//Write enable
+	input logic r_en,					//Read enable
+	input logic shift,					//Shift pin to shift register
+	input logic [$clog2(ROWS)-1:0]addr,	//Address of the row in memory array
+	output logic data_valid,			//When is enable, shows that the data in the output is the value readed
+	output logic [COLS-1:0]data_out		//Shows the data readed
 	);
 
 //   ________________________________

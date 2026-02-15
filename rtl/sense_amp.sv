@@ -1,8 +1,12 @@
+//*****************************************
+// Array of differential amplifiers
+//*****************************************
+
 module sense_amp(
-	input  real row_rd [0:ROWS-1],
-	input  real bl_rd [0:ROWS-1][0:COLS-1],      //BL line from memory array
-	input  real blb_rd [0:ROWS-1][0:COLS-1],     //BLB line from memory array
-	output real preout [0:0][0:COLS-1]      //Output from diff amplifiers
+	input  real row_rd [0:ROWS-1],				//The row selected enables only the amplifiers of selected row
+	input  real bl_rd [0:ROWS-1][0:COLS-1],		//Right bit lines to be compared
+	input  real blb_rd [0:ROWS-1][0:COLS-1],	//Left bit lines to be compared
+	output real preout [0:0][0:COLS-1]			//Shows the data readed
 );
 
 //   ________________________________

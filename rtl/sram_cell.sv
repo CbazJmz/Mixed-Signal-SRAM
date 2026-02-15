@@ -1,9 +1,13 @@
+//*****************************************
+// Memory cell
+//*****************************************
+
 module sram_cell (
-	input  real row_wr,
-	input  real bl_wr,
-	input  real blb_wr,
-	output real bl_rd,
-	output real blb_rd
+	input  real row_wr,	// When is enable, the data is writed in the cell
+	input  real bl_wr,	// Used to write the right bit line 
+	input  real blb_wr,	// Used to write the left bit line
+	output real bl_rd,	// Is the value of the writed right bit line
+	output real blb_rd	// Is the value of the writed left bit line
 );
 
 //   ________________________________

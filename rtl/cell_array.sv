@@ -1,9 +1,13 @@
+//*****************************************
+// Memory array
+//*****************************************
+
 module cell_array (
-	input  real row_wr [0:ROWS-1],
-	input  real bl_wr [0:0][0:COLS-1],
-	input  real blb_wr [0:0][0:COLS-1],
-	output  real bl_rd [0:ROWS-1][0:COLS-1],
-	output  real blb_rd [0:ROWS-1][0:COLS-1]
+	input  real row_wr [0:ROWS-1],				//Each row has an enable to save the word
+	input  real bl_wr [0:0][0:COLS-1],			//Each column has a right bit line, and it is shared with the others rows
+	input  real blb_wr [0:0][0:COLS-1],			//Each column has a left bit line, and it is shared with the others rows
+	output  real bl_rd [0:ROWS-1][0:COLS-1],	//Each bit in the memory array must be had a single right bit line
+	output  real blb_rd [0:ROWS-1][0:COLS-1]	//Each bit in the memory array must be had a single left bit line
 );
 
 //   ________________________________
@@ -16,6 +20,7 @@ const real VDD =  1.5;
 const real VSS =  0.0;
 const real VTH =  0.8;
 
+	// Real to logic converter of value of the row selected
 	logic [ROWS-1:0] l_wr;
 	genvar a;
 	generate

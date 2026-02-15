@@ -1,7 +1,12 @@
+//*****************************************
+// Decoder
+// One Hot
+//*****************************************
+
 module decoder (
-	input logic enable,
-	input  real row_sel [0:$clog2(ROWS)-1],
-	output real row_out [0:ROWS-1]
+	input logic enable,						//When its enable, the output shows the row selected in (1) and the others in (0)
+	input  real row_sel [0:$clog2(ROWS)-1],	//Address to select the row
+	output real row_out [0:ROWS-1]			//Output of onehot decoder
 );
 
 //   ________________________________
