@@ -43,10 +43,16 @@ module sram_top_tb;
 		arst_n = 1'b1;
 
 		// write test
-		int1.full_write();
-		
+		int1.full_write_combs();
+
 		// read test
 		int1.full_read ();
+
+		// wr rd test
+		int1.full_wrrd_combs();
+
+		// random test
+		int1.wr_or_rd_random();
 
 
 		#300;
