@@ -1,0 +1,106 @@
+xrun(64): 25.03-s008: (c) Copyright 1995-2025 Cadence Design Systems, Inc.
+TOOL:	xrun(64)	25.03-s008: Started on Feb 16, 2026 at 20:09:30 UTC
+xrun
+	-f list.f
+		../../rtl/defines.svh
+		../../rtl/nmosfet.sv
+		../../rtl/sram_cell.sv
+		../../rtl/write_driver.sv
+		../../rtl/decoder.sv
+		../../rtl/sense_amp.sv
+		../../rtl/cell_array.sv
+		../../rtl/sipo.sv
+		../../rtl/sram_top.sv
+		../covs.sv
+		../sram_top_intf.sv
+		../sram_top_tb.sv
+	-l ./logs/comp.log
+	+define+sram+
+	-access +rwc
+	-timescale 1ns/1ps
+	-sv
+	-linedebug
+	-cov_cgsample
+	-covoverwrite
+	-coverage u
+	-covtest sram
+xrun: *W,BADPRF: The -linedebug option may have an adverse performance impact.
+Recompiling... reason: file '../covs.sv' is newer than expected.
+	expected: Fri Feb 13 21:40:04 2026
+	actual:   Mon Feb 16 20:09:14 2026
+file: ../covs.sv
+	module worklib.cov_sram:sv
+		errors: 0, warnings: 0
+file: ../sram_top_intf.sv
+				std::randomize(word1);
+				              |
+xmvlog: *W,FUNTSK (../sram_top_intf.sv,138|18): function called as a task without void'().
+			std::randomize(random_data);
+			              |
+xmvlog: *W,FUNTSK (../sram_top_intf.sv,170|17): function called as a task without void'().
+		Caching library 'worklib' ....... Done
+	Elaborating the design hierarchy:
+	Top level design units:
+		$unit_0x2774c3e4
+		nmosfet
+		sram_top_tb
+		Caching library 'worklib' ....... Done
+	Building instance overlay tables: .................... Done
+	Enabling instrumentation for coverage types: functional
+	Generating native compiled code:
+		worklib.cov_sram:sv <0x6d79b8a7>
+			streams:   8, words:  9498
+			assign row_sel_wr [b]= addr [b] == 1'b1 ? VDD : VSS;
+			                |
+xmelab: *W,BNDMEM (/home/sebas/Mixed-Signal-SRAM/rtl/sram_top.sv,81|19): Memory index out of declared bounds.
+			assign row_sel_wr [b]= addr [b] == 1'b1 ? VDD : VSS;
+			                          |
+xmelab: *W,BNDWRN (/home/sebas/Mixed-Signal-SRAM/rtl/sram_top.sv,81|29): Bit-select or part-select index out of declared bounds.
+			assign row_sel_rd [c]= addr [c] == 1'b1 ? VDD : VSS;
+			                |
+xmelab: *W,BNDMEM (/home/sebas/Mixed-Signal-SRAM/rtl/sram_top.sv,94|19): Memory index out of declared bounds.
+			assign row_sel_rd [c]= addr [c] == 1'b1 ? VDD : VSS;
+			                          |
+xmelab: *W,BNDWRN (/home/sebas/Mixed-Signal-SRAM/rtl/sram_top.sv,94|29): Bit-select or part-select index out of declared bounds.
+	Building instance specific data structures.
+xmelab: *W,CGPIDF: Covergroup "per_instance" option , by default, is set as 0.
+xmelab: *N,COVCGN: Coverage configuration file command "set_covergroup -new_instance_reporting" can be specified to improve the scoping and naming of covergroup instances. It may be noted that subsequent merging of a coverage database saved with this command and a coverage database saved without this command is not allowed.
+	Loading native compiled code:     .................... Done
+	Design hierarchy summary:
+		                 Instances  Unique
+		Modules:                74      10
+		Interfaces:              1       1
+		Registers:             602      91
+		Scalar wires:          500       -
+		Vectored wires:         24       -
+		Always blocks:          67       4
+		Initial blocks:        217      25
+		Cont. assignments:     169      15
+		Pseudo assignments:    352       -
+		Covergroup Instances:    0       2
+		Compilation units:       1       1
+		Simulation timescale:  1ps
+	Writing initial simulation snapshot: worklib.nmosfet:sv
+Loading snapshot worklib.nmosfet:sv .................... Done
+SVSEED default: 1
+xcelium> source /mnt/edatools/cadence/XCELIUM2503/tools/xcelium/files/xmsimrc
+xcelium> run
+xmsim: *W,MTDNOCFG: MTD auto-configuration failed, default settings are in use.
+Simulation complete via $finish(1) at time 2195 NS + 0
+../sram_top_tb.sv:53 		$finish;
+xcelium> exit
+xmsim: *N,COVCGN: Coverage configuration file command "set_covergroup -new_instance_reporting" can be specified to improve the scoping and naming of covergroup instances. It may be noted that subsequent merging of a coverage database saved with this command and a coverage database saved without this command is not allowed.
+xmsim: *W,CGDEFN: Default name "sram_top_tb.sram1.cov1.wr_i" will be generated for covergroup instance "wr_i" as the name of the covergroup instance is not specified explicitly: ../covs.sv, 39.
+xmsim: *W,CGDEFN: Default name "sram_top_tb.sram1.cov1.rd_i" will be generated for covergroup instance "rd_i" as the name of the covergroup instance is not specified explicitly: ../covs.sv, 40.
+
+coverage setup:
+  workdir  :  ./cov_work
+  dutinst  :  nmosfet(nmosfet)
+  dutinst  :  sram_top_tb(sram_top_tb)
+  scope    :  scope
+  testname :  sram
+
+coverage files:
+  model(design data) :  ./cov_work/scope/icc_00000000_23de38fb.ucm
+  data               :  ./cov_work/scope/sram/icc_00000000_23de38fb.ucd
+TOOL:	xrun(64)	25.03-s008: Exiting on Feb 16, 2026 at 20:09:42 UTC  (total: 00:00:12)

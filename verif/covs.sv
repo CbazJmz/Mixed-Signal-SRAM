@@ -36,4 +36,7 @@ module cov_sram (
 
 	endgroup: rd_port_cg
 
+	wr_port_cg wr_i = new();
+	rd_port_cg rd_i = new();
+
 endmodule: cov_sram
