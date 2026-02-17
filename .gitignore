@@ -2,3 +2,11 @@
 *.history
 *.d
 *verif/work/shm_db/
+*verif/~$test_plan.xlsm
+*verif/work/logs/
+*verif/work/cov_work/
+*verif/work/.simvision/
+*verif/work/imc.log
+*verif/work/mdv.log
+*fv/jgproject/
+*fv/jg_fpv.tcl
