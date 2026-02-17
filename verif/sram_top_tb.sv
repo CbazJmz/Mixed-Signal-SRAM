@@ -10,6 +10,36 @@ module sram_top_tb;
 	logic [$clog2(ROWS)-1:0]addr;
 	logic data_valid;
 	logic [COLS-1:0]data_out;
+	
+	logic [COLS-1:0] parallel_sipo;
+	logic [COLS-1:0] ref_mem [0:ROWS-1];
+
+	always @(posedge clk) begin
+		if (arst_n && w_en) begin
+			ref_mem[addr] <= parallel_sipo;
+		end
+	end
+	
+	property read_returns_written_data;
+		@(posedge clk)
+		disable iff (!arst_n)
+		(r_en && data_valid) |-> (data_out == ref_mem[addr]);
+	endproperty
+
+	assert property(read_returns_written_data)
+		else $error("DATA MISMATCH at addr %0d: expected %0h got %0h",
+					addr, ref_mem[addr], data_out);
+
+	
+	sipo s1(
+	.clk (clk),
+	.arst_n (arst_n),
+	.serial_in (int1.serial_in),
+	.load (int1.load),
+	.shift (int1.shift),
+	.parallel_out (parallel_sipo)
+	);
+
 
 	sram_top sram1(
 	.clk (clk),
