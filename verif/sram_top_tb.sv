@@ -20,15 +20,14 @@ module sram_top_tb;
 		end
 	end
 	
-	property read_returns_written_data;
-		@(posedge clk)
-		disable iff (!arst_n)
-		(r_en && data_valid) |-> (data_out == ref_mem[addr]);
+	property memory_correctness;
+	@(posedge clk)
+	disable iff (!arst_n)
+	(r_en && data_valid) |-> (data_out == ref_mem[addr]);
+
 	endproperty
 
-	assert property(read_returns_written_data)
-		else $error("DATA MISMATCH at addr %0d: expected %0h got %0h",
-					addr, ref_mem[addr], data_out);
+	assert property(memory_correctness);
 
 	
 	sipo s1(
