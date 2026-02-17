@@ -1,5 +1,5 @@
 xrun(64): 25.03-s008: (c) Copyright 1995-2025 Cadence Design Systems, Inc.
-TOOL:	xrun(64)	25.03-s008: Started on Feb 16, 2026 at 23:52:21 UTC
+TOOL:	xrun(64)	25.03-s008: Started on Feb 17, 2026 at 19:22:25 UTC
 xrun
 	-f list.f
 		../../rtl/defines.svh
@@ -25,16 +25,14 @@ xrun
 	-coverage u
 	-covtest sram
 xrun: *W,BADPRF: The -linedebug option may have an adverse performance impact.
-Recompiling... reason: file '../sram_top_tb.sv' is newer than expected.
-	expected: Mon Feb 16 23:28:21 2026
-	actual:   Mon Feb 16 23:52:16 2026
+Recompiling... reason: file '/home/sebas/Mixed-Signal-SRAM/rtl/defines.svh' is newer than expected.
+	expected: Tue Feb 17 19:20:20 2026
+	actual:   Tue Feb 17 19:22:23 2026
+file: ../../rtl/defines.svh
 file: ../sram_top_intf.sv
 			std::randomize(random_data);
 			              |
 xmvlog: *W,FUNTSK (../sram_top_intf.sv,113|17): function called as a task without void'().
-file: ../sram_top_tb.sv
-	module worklib.sram_top_tb:sv
-		errors: 0, warnings: 0
 		Caching library 'worklib' ....... Done
 	Elaborating the design hierarchy:
 	Top level design units:
@@ -45,11 +43,27 @@ file: ../sram_top_tb.sv
 	Building instance overlay tables: .................... Done
 	Enabling instrumentation for coverage types: functional
 	Generating native compiled code:
-		worklib.sram_top_tb:sv <0x1cea831d>
-			streams:  15, words:  6865
-		worklib.sram_top_intf:sv <0x194acbbf>
+		worklib.cov_sram:sv <0x606225ef>
+			streams:  20, words: 23178
+		worklib.sram_cell:sv <0x48391c7f>
+			streams:   4, words:  3463
+		worklib.sipo:sv <0x11bbf5c1>
+			streams:   4, words:  1368
+		worklib.sram_top_tb:sv <0x4042f4ca>
+			streams:  27, words: 15251
+		worklib.nmosfet:sv <0x05fa6836>
+			streams:   4, words:  2514
+		worklib.sram_top_intf:sv <0x1de8f722>
 			streams:   6, words: 26304
-		worklib.sram_top:sv <0x7cf248a8>
+		worklib.write_driver:sv <0x1fadad4a>
+			streams:   5, words:  4058
+		worklib.cell_array:sv <0x1b3de0fc>
+			streams:   9, words:  5872
+		worklib.decoder:sv <0x22141ad4>
+			streams:   6, words:  4705
+		worklib.sense_amp:sv <0x7bd96af5>
+			streams:   7, words:  7854
+		worklib.sram_top:sv <0x08858c9e>
 			streams:  28, words: 25081
 			assign row_sel_wr [b]= addr [b] == 1'b1 ? VDD : VSS;
 			                |
@@ -69,15 +83,16 @@ xmelab: *N,COVCGN: Coverage configuration file command "set_covergroup -new_inst
 	Loading native compiled code:     .................... Done
 	Design hierarchy summary:
 		                 Instances  Unique
-		Modules:                74      10
+		Modules:                75      10
 		Interfaces:              1       1
-		Registers:             605      94
-		Scalar wires:          500       -
-		Vectored wires:         24       -
-		Always blocks:          67       4
-		Initial blocks:        220      28
+		Registers:             613     100
+		Scalar wires:          505       -
+		Vectored wires:         26       -
+		Always blocks:          72       8
+		Initial blocks:        221      29
 		Cont. assignments:     169      15
-		Pseudo assignments:    352       -
+		Pseudo assignments:    358       -
+		Assertions:              1       1
 		Covergroup Instances:    0       5
 		Compilation units:       1       1
 		Simulation timescale:  1ps
@@ -21079,8 +21094,8 @@ Serial in : 1
 Serial in : 1
 Serial in : 1
 Serial in : 1
-Simulation complete via $finish(1) at time 295765 NS + 0
-../sram_top_tb.sv:60 		$finish;
+Simulation complete via $finish(1) at time 295785 NS + 0
+../sram_top_tb.sv:89 		$finish;
 xcelium> exit
 xmsim: *N,COVCGN: Coverage configuration file command "set_covergroup -new_instance_reporting" can be specified to improve the scoping and naming of covergroup instances. It may be noted that subsequent merging of a coverage database saved with this command and a coverage database saved without this command is not allowed.
 xmsim: *W,CGDEFN: Default name "sram_top_tb.sram1.cov1.ctrl_cg_i" will be generated for covergroup instance "ctrl_cg_i" as the name of the covergroup instance is not specified explicitly: ../covs.sv, 113.
@@ -21097,6 +21112,6 @@ coverage setup:
   testname :  sram
 
 coverage files:
-  model(design data) :  ./cov_work/scope/icc_00000000_36b3e6bb.ucm (reused)
-  data               :  ./cov_work/scope/sram/icc_00000000_36b3e6bb.ucd
-TOOL:	xrun(64)	25.03-s008: Exiting on Feb 16, 2026 at 23:52:33 UTC  (total: 00:00:12)
+  model(design data) :  ./cov_work/scope/icc_00000000_376c8e85.ucm (reused)
+  data               :  ./cov_work/scope/sram/icc_00000000_376c8e85.ucd
+TOOL:	xrun(64)	25.03-s008: Exiting on Feb 17, 2026 at 19:22:37 UTC  (total: 00:00:12)

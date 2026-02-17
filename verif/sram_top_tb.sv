@@ -12,18 +12,18 @@ module sram_top_tb;
 	logic [COLS-1:0]data_out;
 	
 	logic [COLS-1:0] parallel_sipo;
-	logic [COLS-1:0] ref_mem [0:ROWS-1];
+	logic [ROWS-1:0] ref_mem [0:COLS-1];
 
 	always @(posedge clk) begin
-		if (arst_n && w_en) begin
-			ref_mem[addr] <= parallel_sipo;
+		if (arst_n && int1.w_en) begin
+			ref_mem[int1.addr] <= parallel_sipo;
 		end
 	end
 	
 	property memory_correctness;
 	@(posedge clk)
 	disable iff (!arst_n)
-	(r_en && data_valid) |-> (data_out == ref_mem[addr]);
+	(int1.r_en && int1.data_valid) |-> (int1.data_out == ref_mem[int1.addr]);
 
 	endproperty
 
@@ -82,7 +82,7 @@ module sram_top_tb;
 		int1.full_wrrd_combs();
 
 		// random test
-		//int1.wr_or_rd_random();
+		int1.wr_or_rd_random('0);
 
 
 		#300;
