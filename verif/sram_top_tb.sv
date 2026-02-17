@@ -90,7 +90,7 @@ module sram_top_tb;
 	end
 	
 	initial begin
-		#1s;
+		#235ms;
 		$finish;
 	end
 

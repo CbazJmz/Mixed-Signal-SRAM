@@ -6,7 +6,7 @@
 #../../fv/fv_sram.sv
 
 #RTL
-../../rtl/nmosfet.sv
+#../../rtl/nmosfet.sv
 ../../rtl/sram_cell.sv
 ../../rtl/write_driver.sv
 ../../rtl/decoder.sv
