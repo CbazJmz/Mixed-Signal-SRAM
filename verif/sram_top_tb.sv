@@ -72,24 +72,28 @@ module sram_top_tb;
 		arst_n = 1'b1;
 
 		// write test
+		#20;
 		int1.full_write_combs();
-		#20;
+
 		// read test
-		int1.full_read ();
 		#20;
+		int1.full_read ();
+		
 		// wr rd test
 		#20;
 		int1.full_wrrd_combs();
 
 		// random test
+		#20;
 		int1.wr_or_rd_random('0);
-
-
-		#300;
-		$finish;
 
 	end
 	
+	initial begin
+		#1s;
+		$finish;
+	end
+
 	initial begin
 		$shm_open("shm_db");
 		$shm_probe("ASMTR");

@@ -29,7 +29,7 @@ interface sram_top_intf (
 		begin
 			for (i = COLS-1; i >= 0; i--) begin
 				serial_in = word[i];
-				$display("Serial in : %0d", serial_in);
+				//$display("Serial in : %0d", serial_in);
 				shift  = 1'b1;
 				@(posedge clk);
 			end
