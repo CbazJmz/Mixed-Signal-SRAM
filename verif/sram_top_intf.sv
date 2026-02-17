@@ -29,8 +29,9 @@ interface sram_top_intf (
 		begin
 			for (i = COLS-1; i >= 0; i--) begin
 				serial_in = word[i];
+				$display("Serial in : %0d", serial_in);
 				shift  = 1'b1;
-				repeat (2) @(posedge clk);
+				@(posedge clk);
 			end
 			shift = 1'b0;
 		end
@@ -45,14 +46,18 @@ interface sram_top_intf (
 			for (i = 0; i < ROWS; i++) begin
 				@(posedge clk);	
 				addr = i;
-				for (j = 0; j < COLS; j++)begin
+				word1 = '0;
+				for (j = 0; j < (1<<COLS); j++)begin
 					@(posedge clk);
+					$display("valor j : %0d", j);
+					$display("tiempo : %t", $time);
 					send_serial_word(j);
 					load = 1'b1;
 					@(posedge clk);
 					load = 1'b0;
 					@(posedge clk);
 					w_en = 1'b1;
+					@(posedge clk);
 					r_en = 1'b1;
 					@(posedge clk);
 					w_en = 1'b0;

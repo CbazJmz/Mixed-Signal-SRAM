@@ -44,7 +44,7 @@ const real VTH =  0.8;
 	genvar i;
 	generate
 		for(i=0;i<COLS;i++) begin: COL2
-			assign data_sensed [0] [i]= data_mem [$clog2(row_sensed) - 1'b1][i];
+			assign data_sensed [0] [i]= data_mem [(row_sensed - 1'b1)][i];
 		end
 	endgenerate
 

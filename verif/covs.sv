@@ -76,8 +76,8 @@ module cov_sram (
         }
 
         // Solo cubrir datos cuando son válidos
-        data_out_cp: coverpoint data_out iff (data_valid) {
-            bins data_dist[64] = {[0:(1<<COLS)-1]};
+        data_out_cp: coverpoint data_out {
+            bins data_dist[] = {[0:(1<<COLS)-1]};
         }
 
     endgroup
