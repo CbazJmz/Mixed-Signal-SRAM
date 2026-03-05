@@ -4,10 +4,7 @@
 
 `timescale 1ns/1ps
 
-module wb_sram #(
-	parameter AW = ROWS,
-	parameter DW = COLS
-) (
+module wb_sram (
 	input logic clk,
 	input logic rst_n,
 
